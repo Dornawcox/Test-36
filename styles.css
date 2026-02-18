@@ -646,8 +646,11 @@ h3{font-size: 22px; margin:0 0 10px 0;}
   color: rgba(15,26,20,0.92);
   font-weight: 600;
 }
-.cal-controls{ padding: 12px 14px 14px 14px; display:grid; gap: 10px; }
-.cal-chips{ display:flex; gap: 8px; flex-wrap: wrap; }
+.cal-controls{ padding: 10px 14px 12px 14px; display:flex; flex-direction:column; gap:6px; }
+.cal-filterrow{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.cal-chips{ display:contents; } /* children flow inline into filterrow */
+.cal-chips--tags{ display:contents; }
+.cal-meta-count{ font-size:12px; }
 .cal-chip{
   border:none;
   cursor:pointer;
@@ -669,7 +672,7 @@ h3{font-size: 22px; margin:0 0 10px 0;}
 .cal-rail{ grid-auto-columns: minmax(260px, 300px); }
 
 /* Event card source icon */
-/* event-card source icon: removed, now using ::before */
+
 
 /* ===== Featured book layout ===== */
 .featured-book{
@@ -1285,7 +1288,7 @@ h3{font-size: 22px; margin:0 0 10px 0;}
   padding-top: 2px;
 }
 
-/* event-card wg-project-card overrides: removed */
+
 
 .wg-project-cards .wg-project-card {
   border-radius: 20px !important;
@@ -1387,81 +1390,11 @@ h3{font-size: 22px; margin:0 0 10px 0;}
 }
 
 
-/* new event-card CSS: removed, replaced below */
+
 
 /* metagov variant CSS: removed, replaced below */
 
-/* ============================================================
-   EVENT CARDS — matching screenshot 1 / test-24 style
-   Uses wg-project-card base + event-card overrides
-   ============================================================ */
 
-/* Cal rail: compact width */
-.cal-rail { grid-auto-columns: minmax(260px, 295px) !important; }
-
-/* Event card inherits wg-project-card background/border.
-   Override to use a softer green tint that matches test-24. */
-.event-card {
-  --wgHue: 138;
-  position: relative;
-}
-
-/* Source favicon shown in top-left corner using ::before with CSS custom property.
-   Falls back gracefully when --ev-icon is not set (shows nothing). */
-.event-card::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background-color: rgba(255,255,255,0.85);
-  background-image: var(--ev-icon, none);
-  background-size: 18px 18px;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 2;
-}
-
-/* Top section layout: icon offset on left, content flows right */
-.event-card .wg-project-card__top {
-  padding: 12px 12px 10px 48px !important;
-  display: grid !important;
-  gap: 8px !important;
-}
-
-/* Title: bold, readable */
-.event-card .wg-project-card__name {
-  font-size: 14px !important;
-  font-weight: 800 !important;
-  line-height: 1.25 !important;
-}
-
-/* Subtitle (date + location): muted, wraps cleanly */
-.event-card .wg-project-card__one-liner {
-  font-size: 12px !important;
-  line-height: 1.4 !important;
-  color: rgba(0,0,0,0.65) !important;
-  white-space: normal !important;
-}
-
-/* Pills row */
-.event-card .wg-project-card__meta {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 5px !important;
-  margin-top: 2px !important;
-}
-
-/* Source pill: slightly bolder */
-.ev-src-pill {
-  background: rgba(47,122,82,0.12) !important;
-  border-color: rgba(47,122,82,0.25) !important;
-  color: rgba(0,50,20,0.85) !important;
-  font-weight: 800 !important;
-}
 
 /* ============================================================
    METAGOV CARDS — matches screenshot 3
@@ -1540,4 +1473,219 @@ h3{font-size: 22px; margin:0 0 10px 0;}
   background: rgba(90,70,180,0.08);
   color: rgba(60,40,140,0.90);
   border-color: rgba(90,70,180,0.20);
+}
+
+/* ============================================================
+   EVENT CARDS (.ec) — fully self-contained, no inheritance
+   from .wg-project-card. Matches screenshot 1 target style.
+   ============================================================ */
+
+/* Rail width */
+.cal-rail { grid-auto-columns: minmax(260px, 290px) !important; }
+
+/* Card shell */
+.ec {
+  scroll-snap-align: start;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: hsl(138 45% 93%);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Inner row: icon + body side-by-side */
+.ec__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 12px 10px 12px;
+}
+
+/* Source favicon */
+.ec__icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  object-fit: contain;
+  padding: 3px;
+}
+.ec__icon--empty {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Body: title + when + pills */
+.ec__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ec__title {
+  margin: 0 0 4px 0;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: rgba(0,0,0,0.90);
+}
+
+.ec__when {
+  margin: 0 0 7px 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(0,0,0,0.62);
+}
+
+/* Pills row */
+.ec__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ec-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.65);
+  color: rgba(0,0,0,0.72);
+  white-space: nowrap;
+}
+
+.ec-pill--src {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(0,80,40,0.22);
+  color: rgba(0,50,25,0.85);
+  font-weight: 800;
+}
+
+/* Details expand */
+.ec__details {
+  border-top: 1px solid rgba(0,0,0,0.09);
+  background: rgba(0,0,0,0.02);
+  margin-top: auto;
+}
+
+.ec__summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.70);
+  user-select: none;
+}
+.ec__summary::-webkit-details-marker { display: none; }
+
+.ec__chev {
+  transition: transform 160ms ease;
+  opacity: 0.7;
+}
+.ec__details[open] .ec__chev { transform: rotate(180deg); }
+
+.ec__expand {
+  padding: 8px 12px 12px;
+}
+
+.ec__desc {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(0,0,0,0.68);
+}
+
+.ec__links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ec__link {
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.14);
+  background: rgba(255,255,255,0.75);
+  color: rgba(0,50,25,0.90);
+}
+.ec__link:hover {
+  background: rgba(255,255,255,0.95);
+}
+
+/* ============================================================
+   BUTTON SYSTEM REFRESH
+   Recommendation implemented:
+   - Cleaner pill shape (999px radius) instead of boxy 14px
+   - Solid primary: deep forest green with white text, no gradient
+   - Outlined secondary: transparent bg, green border+text
+   - Small variant: used throughout for section CTAs
+   - Better letter-spacing and font-weight for readability
+   - Subtle hover lift instead of brightness hacks
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 999px;           /* pill shape — modern, friendly */
+  border: 1.5px solid var(--border);
+  background: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  transition: box-shadow 140ms ease, transform 140ms ease, background 140ms ease;
+  cursor: pointer;
+}
+.btn:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.10), 0 8px 20px rgba(0,0,0,0.07);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+
+/* Primary: solid deep forest green — high contrast, confident */
+.btn.primary {
+  background: #1a5c35;            /* richer, darker than --accent */
+  border-color: #143f25;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(26,92,53,0.30), 0 1px 2px rgba(0,0,0,0.12);
+}
+.btn.primary:hover {
+  background: #1e6b3e;
+  box-shadow: 0 4px 14px rgba(26,92,53,0.35), 0 2px 4px rgba(0,0,0,0.14);
+}
+
+/* Small variant for section CTAs */
+.btn.small {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+/* Outlined variant: green border, transparent bg */
+.btn.outline {
+  background: transparent;
+  border-color: rgba(26,92,53,0.45);
+  color: #1a5c35;
+}
+.btn.outline:hover {
+  background: rgba(26,92,53,0.06);
+  border-color: rgba(26,92,53,0.65);
 }

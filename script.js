@@ -271,7 +271,7 @@
   function card(ev){
     const src = SOURCE[ev.source] || { label: ev.source || 'Event', icon:'' };
     const tagList = (ev.tags || []).filter(t => t !== ev.source).slice(0,3);
-    const tagPills = tagList.map(t => `<span class="wg-pill">${escapeHtml(t)}</span>`).join('');
+    const tagPills = tagList.map(t => `<span class="ec-pill">${escapeHtml(t)}</span>`).join('');
     const startDate = new Date(ev.start);
     const endDate = ev.end ? new Date(ev.end) : null;
     const isMultiDay = endDate && startDate.toDateString() !== endDate.toDateString();
@@ -282,24 +282,25 @@
     const where = ev.location ? ` • ${ev.location}` : '';
 
     return `
-<article class="wg-project-card event-card"${src.icon ? ` style="--ev-icon:url('${src.icon}')"` : ''}>
-  <header class="wg-project-card__top">
-    <div class="wg-project-card__main">
-      <h4 class="wg-project-card__name">${escapeHtml(ev.title || 'Untitled event')}</h4>
-      <p class="wg-project-card__one-liner">${escapeHtml(dateStr)}${escapeHtml(where)}</p>
+<article class="ec">
+  <div class="ec__inner">
+    ${src.icon ? `<img class="ec__icon" src="${src.icon}" alt="${escapeHtml(src.label)} logo" loading="lazy" />` : '<div class="ec__icon ec__icon--empty"></div>'}
+    <div class="ec__body">
+      <h4 class="ec__title">${escapeHtml(ev.title || 'Untitled event')}</h4>
+      <p class="ec__when">${escapeHtml(dateStr)}${escapeHtml(where)}</p>
+      <div class="ec__pills">
+        <span class="ec-pill ec-pill--src">${escapeHtml(src.label)}</span>
+        ${tagPills}
+      </div>
     </div>
-    <div class="wg-project-card__meta">
-      <span class="wg-pill ev-src-pill">${escapeHtml(src.label)}</span>
-      ${tagPills}
-    </div>
-  </header>
-  <details class="wg-project-card__details event-details">
-    <summary class="wg-project-card__summary"><span>Details</span><span class="wg-project-card__chev" aria-hidden="true">▾</span></summary>
-    <div class="wg-project-card__body">
-      ${ev.description ? `<p>${escapeHtml(ev.description)}</p>` : ''}
-      <div class="wg-project-card__links">
-        ${ev.url ? `<a href="${escapeHtml(ev.url)}" target="_blank" rel="noopener">Event link ↗</a>` : ''}
-        <a href="calendar.html">Month view ↗</a>
+  </div>
+  <details class="ec__details">
+    <summary class="ec__summary"><span>Details</span><span class="ec__chev" aria-hidden="true">▾</span></summary>
+    <div class="ec__expand">
+      ${ev.description ? `<p class="ec__desc">${escapeHtml(ev.description)}</p>` : ''}
+      <div class="ec__links">
+        ${ev.url ? `<a class="ec__link" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener">Event link ↗</a>` : ''}
+        <a class="ec__link" href="calendar.html">Month view ↗</a>
       </div>
     </div>
   </details>

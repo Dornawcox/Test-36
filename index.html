@@ -480,9 +480,11 @@ window.OPENTEAM_INDEX_PROJECTS = [{"title": "Fair Tech Registry Collabathon", "s
 <a class="btn small" href="calendar.html">Open month view ↗</a>
 </summary>
 <div aria-label="Event filters" class="cal-controls">
-<div class="cal-chips" id="calSourceChips"></div>
-<div class="cal-chips" id="calTagChips"></div>
-<div class="muted" id="calMeta">Loading events…</div>
+<div class="cal-filterrow">
+  <div class="cal-chips" id="calSourceChips" aria-label="Filter by source"></div>
+  <div class="cal-chips cal-chips--tags" id="calTagChips" aria-label="Filter by tag"></div>
+</div>
+<div class="muted cal-meta-count" id="calMeta">Loading events…</div>
 </div>
 <div aria-label="Event cards" class="wg-project-cards">
 <div class="wg-project-cards__wrap">
@@ -501,7 +503,7 @@ window.OPENTEAM_INDEX_PROJECTS = [{"title": "Fair Tech Registry Collabathon", "s
 <h2>Inspirations - What we’re reading</h2>
 <p><strong>Coming soon:</strong> An interactive library. The live list is explorable via the button below.</p>
 <div style="margin-top: 12px;">
-<a class="btn small" href="canonical-source-texts-updated-v9.html">Open the library ↗</a>
+<a class="btn small" href="canonical-source-texts.html">Open the library ↗</a>
 </div>
 </div><div class="suggest-bubble">
 <div class="suggest-inner">

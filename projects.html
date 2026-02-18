@@ -123,8 +123,17 @@ const RAILS_CONFIG = [
     "show": true,
     "showSearch": false,
     "showFilters": true,
+    "filterField": "category",
     "filters": [
-      "All types"
+      "All",
+      "Community",
+      "Convening & Experiences",
+      "Governance Funding",
+      "Governance UX",
+      "Interoperability",
+      "Mapping Governance",
+      "Network Building",
+      "Standards"
     ],
     "showSort": true,
     "sortOptions": [
@@ -342,144 +351,292 @@ const OPENTEAM_PROJECTS = [
 ];
 const METAGOV_PROJECTS = [
   {
+    "title": "The Protopian Fiction Prize",
+    "href": "https://metagov.org/projects/protopian",
+    "img": "https://metagov.org/media/pages/projects/protopian/21feed2742-1768435511/globe-dithered-434x235-crop.png",
+    "desc": "Write the story of humanity's future.",
+    "category": "Convening & Experiences",
+    "type": "Publication",
+    "status": "Active"
+  },
+  {
+    "title": "Atlas Computing",
+    "href": "https://metagov.org/projects/atlas-computing",
+    "img": "https://metagov.org/media/pages/projects/atlas-computing/13c84f76f9-1756312156/atlascomputing-434x235-crop.jpg",
+    "desc": "Mapping the way to human governance of AI.",
+    "category": "Mapping Governance",
+    "type": "R&D",
+    "status": "Active"
+  },
+  {
+    "title": "Attention Economy",
+    "href": "https://metagov.org/projects/attentionecon",
+    "img": "https://metagov.org/media/pages/projects/attentionecon/820fb35067-1751175556/default_shaded-434x235-crop.png",
+    "desc": "Exploring the intersection of attention economies and governance experience design.",
+    "category": "Governance UX",
+    "type": "R&D",
+    "status": "Active"
+  },
+  {
+    "title": "Governable Spacemakers Fellowship",
+    "href": "https://metagov.org/projects/governable-spacemakers-fellowship",
+    "img": "https://metagov.org/media/pages/projects/governable-spacemakers-fellowship/f3062d056c-1748540628/space-makers-moving-434x235-crop.gif",
+    "desc": "Where and how governance happens online is evolving.",
+    "category": "Network Building",
+    "type": "Community of Practice",
+    "status": "Active"
+  },
+  {
+    "title": "Theory + Practice",
+    "href": "https://metagov.org/projects/theory-practice",
+    "img": "https://metagov.org/media/pages/projects/theory-practice/d6d274c0c3-1743615321/t-p-3-small-434x235-crop.png",
+    "desc": "Connecting new political theory with new democratic practice.",
+    "category": "Convening & Experiences",
+    "type": "Roundtable",
+    "status": "Active"
+  },
+  {
     "title": "KOI Pond",
     "href": "https://metagov.org/projects/koi-pond",
-    "img": "https://metagov.org/wp-content/uploads/2022/09/koi_pond-scaled.jpg",
-    "desc": "Knowledge Organization Infrastructure — a modular system for tagging, tracking, and navigating governance knowledge across communities.",
-    "status": "Active"
-  },
-  {
-    "title": "PolicyKit",
-    "href": "https://metagov.org/projects/policykit",
-    "img": "https://metagov.org/wp-content/uploads/2021/11/policykit-scaled.jpg",
-    "desc": "A platform for writing and enforcing governance policies in online communities, built on a modular governance engine.",
-    "status": "Active"
-  },
-  {
-    "title": "CommunityRule",
-    "href": "https://metagov.org/projects/communityrule",
-    "img": "https://metagov.org/wp-content/uploads/2021/11/communityrule.jpg",
-    "desc": "A tool for designing, publishing, and sharing governance rules for online communities. Open-source and free to use.",
-    "status": "Active"
-  },
-  {
-    "title": "Metagov Gateway",
-    "href": "https://metagov.org/projects/metagov-gateway",
-    "img": "https://metagov.org/wp-content/uploads/2022/01/gateway-scaled.jpg",
-    "desc": "API layer connecting governance plugins to online communities — Slack, Discord, GitHub, and more.",
-    "status": "Active"
-  },
-  {
-    "title": "DAOstar",
-    "href": "https://metagov.org/projects/daostar",
-    "img": "https://metagov.org/wp-content/uploads/2022/04/daostar.jpg",
-    "desc": "A standards body for DAO interoperability. Develops shared schemas so DAO tools and communities can share data.",
-    "status": "Active"
-  },
-  {
-    "title": "Govbase Dataset",
-    "href": "https://metagov.org/projects/govbase-dataset",
-    "img": "https://metagov.org/wp-content/uploads/2021/11/govbase.jpg",
-    "desc": "An open database of online governance structures, tools, and case studies — a research commons for governance scholars.",
-    "status": "Active"
-  },
-  {
-    "title": "Public AI",
-    "href": "https://metagov.org/projects/public-ai",
-    "img": "",
-    "desc": "Exploring governance models and institutional designs for AI systems owned and operated in the public interest.",
-    "status": "Active"
-  },
-  {
-    "title": "Groundwork Fellowship",
-    "href": "https://metagov.org/projects/groundwork-fellowship",
-    "img": "",
-    "desc": "A fellowship connecting researchers and practitioners to co-develop governance knowledge through hands-on experimentation.",
-    "status": "Active"
-  },
-  {
-    "title": "Interoperable Deliberative Tools",
-    "href": "https://metagov.org/projects/interop",
-    "img": "",
-    "desc": "Building bridges between online deliberation platforms so communities can use multiple tools without losing shared context.",
-    "status": "Active"
-  },
-  {
-    "title": "Modular Politics",
-    "href": "https://metagov.org/projects/modular-politics",
-    "img": "",
-    "desc": "A framework for composing governance policies from interchangeable components — enabling communities to adapt and share governance patterns.",
-    "status": "Active"
-  },
-  {
-    "title": "Metagov Seminar",
-    "href": "https://metagov.org/projects/metagov-seminar",
-    "img": "",
-    "desc": "A weekly research seminar on digital governance, featuring talks from scholars, practitioners, and community builders.",
-    "status": "Active"
-  },
-  {
-    "title": "Telescope",
-    "href": "https://metagov.org/projects/telescope",
-    "img": "",
-    "desc": "A tool for tracking and visualizing governance activity across online communities, DAOs, and open-source projects.",
+    "img": "https://metagov.org/media/pages/projects/koi-pond/01f7edd29a-1741974414/koi-434x235-crop.png",
+    "desc": "Experiments in online community self-governance using an LLM-mediated Knowledge Organization Infrastructure.",
+    "category": "Governance UX",
+    "type": "Tool",
     "status": "Active"
   },
   {
     "title": "Cryptoeconomic Systems",
     "href": "https://metagov.org/projects/cryptoeconomic-systems",
-    "img": "",
-    "desc": "Academic journal and conference focused on cryptoeconomic design, token governance, and decentralized coordination.",
+    "img": "https://metagov.org/media/pages/projects/cryptoeconomic-systems/f24d711554-1733076312/screen-shot-2024-12-01-at-12.04.47-pm-434x235-crop.png",
+    "desc": "Academic journal and conference on cryptoeconomic design and token governance.",
+    "category": "Convening & Experiences",
+    "type": "Publication",
     "status": "Active"
   },
   {
-    "title": "D20 Governance",
-    "href": "https://metagov.org/projects/d20-governance",
-    "img": "",
-    "desc": "A game-based learning project using tabletop role-playing mechanics to teach and prototype governance systems.",
+    "title": "Interoperable Deliberative Tools",
+    "href": "https://metagov.org/projects/interop",
+    "img": "https://metagov.org/media/pages/projects/interop/5b4d99e38e-1732556125/interop-434x235-crop.jpg",
+    "desc": "Homebase for interoperable deliberative tools.",
+    "category": "Interoperability",
+    "type": "Tool",
     "status": "Active"
   },
   {
-    "title": "Agreement Engine",
-    "href": "https://metagov.org/projects/agreement-engine",
-    "img": "",
-    "desc": "A system for creating, signing, and tracking community agreements in structured, machine-readable formats.",
-    "status": "Active"
-  },
-  {
-    "title": "Protopian Fiction Prize",
-    "href": "https://metagov.org/projects/protopian",
-    "img": "",
-    "desc": "A literary prize celebrating near-future speculative fiction that imagines better — but realistic — governance and coordination.",
-    "status": "Active"
-  },
-  {
-    "title": "OSS Transitions",
-    "href": "https://metagov.org/projects/oss-transitions",
-    "img": "",
-    "desc": "Studying how open-source projects change governance models over time, and what makes transitions succeed or fail.",
-    "status": "Research"
-  },
-  {
-    "title": "MetagovDAO",
-    "href": "https://metagov.org/projects/metagovdao",
-    "img": "",
-    "desc": "Metagov's own participatory governance experiment — a DAO structure for allocating research resources and priorities.",
+    "title": "Mathematics for Governance Design",
+    "href": "https://metagov.org/projects/mathematics-for-governance-design",
+    "img": "https://metagov.org/media/pages/projects/mathematics-for-governance-design/aac7795227-1732560935/screen-shot-2024-11-25-at-10.55.06-am-434x235-crop.png",
+    "desc": "Applying mathematics to the design of governance systems.",
+    "category": "Mapping Governance",
+    "type": "R&D",
     "status": "Active"
   },
   {
     "title": "Constitutions of Web3",
     "href": "https://metagov.org/projects/constitutions-of-web3",
-    "img": "",
-    "desc": "Collecting and analyzing founding documents of DAOs and Web3 communities to understand emerging governance norms.",
-    "status": "Research"
+    "img": "https://metagov.org/media/pages/projects/constitutions-of-web3/2fe8adbaef-1709309833/constit-434x235-crop.png",
+    "desc": "Analysis and guides for DAO constitutions.",
+    "category": "Mapping Governance",
+    "type": "Publication",
+    "status": "Active"
+  },
+  {
+    "title": "Cryptopolitics",
+    "href": "https://metagov.org/projects/cryptopolitics",
+    "img": "https://metagov.org/media/pages/projects/cryptopolitics/06905a4367-1709252374/cryptopolitics_all_stickers-434x235-crop.jpg",
+    "desc": "A study of politics and ideology in crypto.",
+    "category": "Mapping Governance",
+    "type": "Publication",
+    "status": "Active"
+  },
+  {
+    "title": "D20 Governance",
+    "href": "https://metagov.org/projects/d20-governance",
+    "img": "https://metagov.org/media/pages/projects/d20-governance/a9f69b3650-1709111871/d20_governance-434x235-crop.jpg",
+    "desc": "LLM-mediated modular governance games on Discord.",
+    "category": "Governance UX",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "DAO Science",
+    "href": "https://metagov.org/projects/dao-science",
+    "img": "https://metagov.org/media/pages/projects/dao-science/4711ccfb1f-1709253730/dao_science-434x235-crop.png",
+    "desc": "A survey paper and community site for DAO research.",
+    "category": "Mapping Governance",
+    "type": "Data Set",
+    "status": "Active"
+  },
+  {
+    "title": "DAOchem",
+    "href": "https://metagov.org/projects/daochem",
+    "img": "https://metagov.org/media/pages/projects/daochem/8afeee59c6-1709254113/dao_chem-434x235-crop.png",
+    "desc": "A holistic view of DAO governance.",
+    "category": "Mapping Governance",
+    "type": "Data Set",
+    "status": "Active"
   },
   {
     "title": "Governance Ecologies",
     "href": "https://metagov.org/projects/governance-ecologies",
-    "img": "",
-    "desc": "Research mapping how governance tools and practices spread, evolve, and interact across communities and platforms.",
-    "status": "Research"
+    "img": "https://metagov.org/media/pages/projects/governance-ecologies/8ddab38fa9-1746131858/goveco-removebg-preview-434x235-crop.png",
+    "desc": "An exploration of historical governance practices across communities.",
+    "category": "Mapping Governance",
+    "type": "R&D",
+    "status": "Active"
+  },
+  {
+    "title": "Governance Experience Design",
+    "href": "https://metagov.org/projects/governance-experience-design",
+    "img": "https://metagov.org/media/pages/projects/governance-experience-design/fd8fd40671-1709253305/gov_ex_design-434x235-crop.jpg",
+    "desc": "A living manifesto for online spaces.",
+    "category": "Governance UX",
+    "type": "Publication",
+    "status": "Active"
+  },
+  {
+    "title": "Groundwork Fellowship",
+    "href": "https://metagov.org/projects/groundwork-fellowship",
+    "img": "https://metagov.org/media/pages/projects/groundwork-fellowship/d83f500c02-1713925134/groundwork-photo_collage-bgs-434x235-crop.png",
+    "desc": "An internet infrastructure design and marginalization fellowship.",
+    "category": "Network Building",
+    "type": "Community of Practice",
+    "status": "Active"
+  },
+  {
+    "title": "Grant Innovation Lab",
+    "href": "https://metagov.org/projects/grant-lab",
+    "img": "https://metagov.org/media/pages/projects/grant-lab/71336c0026-1727039843/final@2x-1-434x235-crop.png",
+    "desc": "Research, resources, and community to help advance granting and impact measurement.",
+    "category": "Governance Funding",
+    "type": "Community of Practice",
+    "status": "Active"
+  },
+  {
+    "title": "CommunityRule",
+    "href": "https://metagov.org/projects/communityrule",
+    "img": "https://metagov.org/media/pages/projects/communityrule/d529c89347-1709247984/community_rule-434x235-crop.jpg",
+    "desc": "A user-friendly governance toolkit for great communities.",
+    "category": "Community",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "Modpol",
+    "href": "https://metagov.org/projects/modpol",
+    "img": "https://metagov.org/media/pages/projects/modpol/7680a60fcf-1709132695/modpol-434x235-crop.png",
+    "desc": "A governance mod for Minetest.",
+    "category": "Community",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "Modular Politics",
+    "href": "https://metagov.org/projects/modular-politics",
+    "img": "https://metagov.org/media/pages/projects/modular-politics/a3826a143b-1709249866/modular_politics-434x235-crop.jpg",
+    "desc": "A paper outlining a governance layer for the internet.",
+    "category": "Interoperability",
+    "type": "Publication",
+    "status": "Active"
+  },
+  {
+    "title": "Calm Technology",
+    "href": "https://metagov.org/projects/calm-technology",
+    "img": "https://metagov.org/media/pages/projects/calm-technology/c2ea4fe649-1716293567/calm-tech-institute-logo-434x235-crop.png",
+    "desc": "A standards body for aligning attention with technology.",
+    "category": "Standards",
+    "type": "Technical Standard",
+    "status": "Active"
+  },
+  {
+    "title": "Govbase Dataset",
+    "href": "https://metagov.org/projects/govbase-dataset",
+    "img": "https://metagov.org/media/pages/projects/govbase-dataset/075d836730-1708447035/govbase_data-434x235-crop.jpg",
+    "desc": "A set of research datasets in online governance.",
+    "category": "Mapping Governance",
+    "type": "Data Set",
+    "status": "Active"
+  },
+  {
+    "title": "Metagov Gateway",
+    "href": "https://metagov.org/projects/metagov-gateway",
+    "img": "https://metagov.org/media/pages/projects/metagov-gateway/089efc0288-1705328802/gateway-434x235-crop.jpg",
+    "desc": "An API gateway for digital governance services.",
+    "category": "Interoperability",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "MetagovDAO",
+    "href": "https://metagov.org/projects/metagovdao",
+    "img": "https://metagov.org/media/pages/projects/metagovdao/cd2fa49472-1708447035/metagov_dao-434x235-crop.jpg",
+    "desc": "A funding body for qualitative governance research on DAOs.",
+    "category": "Governance Funding",
+    "type": "Fundraising",
+    "status": "Active"
+  },
+  {
+    "title": "Metagov Seminar",
+    "href": "https://metagov.org/projects/metagovernance-seminar",
+    "img": "https://metagov.org/media/pages/projects/metagovernance-seminar/ac83387cf7-1708447035/metagov_seminar-434x235-crop.jpg",
+    "desc": "A weekly seminar on digital governance.",
+    "category": "Convening & Experiences",
+    "type": "Roundtable",
+    "status": "Active"
+  },
+  {
+    "title": "PolicyKit",
+    "href": "https://metagov.org/projects/policykit",
+    "img": "https://metagov.org/media/pages/projects/policykit/da151d8deb-1708447035/policykit-434x235-crop.jpg",
+    "desc": "An engine for building governance in online communities.",
+    "category": "Community",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "Public AI",
+    "href": "https://metagov.org/projects/public-ai",
+    "img": "https://metagov.org/media/pages/projects/public-ai/64b06615f3-1708447035/publicai-434x235-crop.jpg",
+    "desc": "A new political economy for AI.",
+    "category": "Mapping Governance",
+    "type": "R&D",
+    "status": "Active"
+  },
+  {
+    "title": "Telescope",
+    "href": "https://metagov.org/projects/telescope",
+    "img": "https://metagov.org/media/pages/projects/telescope/c72b993c45-1708447035/telescope-434x235-crop.jpg",
+    "desc": "A Discord bot for ethical, responsive digital ethnography.",
+    "category": "Community",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "Agreement Engine",
+    "href": "https://metagov.org/projects/agreement-engine",
+    "img": "https://metagov.org/media/pages/projects/agreement-engine/f7114d2c94-1700846822/net-native-agreement-systems-434x235-crop.jpg",
+    "desc": "A tool for building net-native agreement systems.",
+    "category": "Interoperability",
+    "type": "Tool",
+    "status": "Active"
+  },
+  {
+    "title": "DAOstar",
+    "href": "https://metagov.org/projects/daostar",
+    "img": "https://metagov.org/media/pages/projects/daostar/42f57ad6f1-1700846822/daostar-434x235-crop.jpg",
+    "desc": "The standards body of the DAO ecosystem.",
+    "category": "Standards",
+    "type": "Technical Standard",
+    "status": "Active"
+  },
+  {
+    "title": "OSS Transitions",
+    "href": "https://metagov.org/projects/oss-transitions",
+    "img": "https://metagov.org/media/pages/projects/oss-transitions/59c519349a-1708447035/default-434x235-crop.png",
+    "desc": "An NSF-funded collaboration studying open-source governance transitions.",
+    "category": "Mapping Governance",
+    "type": "R&D",
+    "status": "Active"
   }
 ];
 
@@ -587,7 +744,7 @@ function renderCard(scope, item) {
   }
 
   // metagov — matches screenshot 3: left image, bold title, short desc, tag pills, More button
-  const card = el("article", {class:"pcard mg-card", "data-theme":"All types"});
+  const card = el("article", {class:"pcard mg-card", "data-theme": item.category || "All"});
 
   // Left: cover image (portrait crop matching pcard__cover dimensions)
   const imgSrc = item.img || "assets/wg-project-card-placeholder.jpg";
@@ -598,11 +755,11 @@ function renderCard(scope, item) {
 
   // Right: title + description (capped at 2 lines) + status/source pills
   const statusClass = item.status === "Active" ? "mini-pill mini-pill--active"
-    : item.status === "Research" ? "mini-pill mini-pill--research"
-    : "mini-pill";
+    : item.status === "Complete" ? "mini-pill mini-pill--active"
+    : "mini-pill mini-pill--research";
   const pillsEl = el("div", {class:"pcard__pills"}, [
-    item.status ? el("span", {class:statusClass}, [item.status]) : null,
-    el("span", {class:"mini-pill mini-pill--theme"}, ["Metagov"]),
+    item.category ? el("span", {class:"mini-pill mini-pill--theme"}, [item.category]) : null,
+    item.type ? el("span", {class:"mini-pill"}, [item.type]) : null,
   ].filter(Boolean));
 
   const meta = el("div", {class:"pcard__meta"}, [
@@ -626,16 +783,17 @@ function renderCard(scope, item) {
 function applyFilters(scope) {
   const q = (document.querySelector(`.filter-search[data-scope="${scope}"]`)?.value || "").toLowerCase().trim();
   const activeChip = document.querySelector(`.filter-chips[data-scope="${scope}"] .chip.is-active`);
-  const active = activeChip ? activeChip.getAttribute("data-value") : "All types";
+  const active = activeChip ? activeChip.getAttribute("data-value") : "All";
+  const allValues = ["All types", "All"];
 
   const rail = document.querySelector(`.rail[data-scope="${scope}"]`);
   if(!rail) return;
 
-  rail.querySelectorAll(".pcard").forEach(card=>{
-    const theme = card.getAttribute("data-theme") || "All types";
+  rail.querySelectorAll(".pcard,.mg-card").forEach(card=>{
+    const theme = card.getAttribute("data-theme") || "All";
     const txt = card.innerText.toLowerCase();
     const okQ = !q || txt.includes(q);
-    const okT = (active === "All types") ? true : (theme === active);
+    const okT = allValues.includes(active) ? true : (theme === active);
     card.style.display = (okQ && okT) ? "" : "none";
   });
 }
@@ -732,6 +890,7 @@ function mount() {
   });
   applyFilters("openteam");
   applyFilters("metagov");
+  // Data is inline — no async enrichment needed
   // Data is inline — no async enrichment needed
   // enrichMetagov() was removed; metagov cards now ship with real images and descriptions
 }
