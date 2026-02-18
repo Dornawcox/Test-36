@@ -206,7 +206,7 @@
     FARMHACK: { label:'Farm Hack', icon:'https://www.google.com/s2/favicons?domain=farmhack.org&sz=64' }
   };
 
-  const state = { source:'', tag:'' };
+  const state = { tag:'' };
   let data = [];
 
   function escapeHtml(s){
@@ -250,10 +250,8 @@
     document.querySelectorAll('.cal-chip').forEach(ch => {
       const txt = ch.textContent || '';
       let pressed = false;
-      if (txt === 'All sources') pressed = state.source === '';
       if (txt === 'All tags') pressed = state.tag === '';
       for (const k of Object.keys(SOURCE)){
-        if (txt === SOURCE[k].label) pressed = state.source === k;
       }
       if (state.tag && txt === state.tag) pressed = true;
       ch.setAttribute('aria-pressed', pressed ? 'true' : 'false');
@@ -261,7 +259,6 @@
   }
 
   function matches(ev){
-    if (state.source && ev.source !== state.source) return false;
     if (state.tag && !(ev.tags || []).includes(state.tag)) return false;
     const now = Date.now();
     const end = new Date(ev.end || ev.start).getTime();
@@ -312,7 +309,7 @@
 
     const list = data.filter(matches).sort((a,b)=> new Date(a.start).getTime() - new Date(b.start).getTime());
 
-    meta.textContent = `${list.length} upcoming events shown` + (state.source ? ` • ${SOURCE[state.source]?.label || state.source}` : '') + (state.tag ? ` • ${state.tag}` : '');
+    meta.textContent = `${list.length} upcoming events shown` + (state.tag ? ` • ${state.tag}` : '');
 
     // For this homepage rail, show the next ~18 events (still scrollable)
     const subset = list.slice(0, 18);
@@ -323,18 +320,9 @@
   }
 
   function buildFilters(){
-    const sources = [...new Set(data.map(e=>e.source).filter(Boolean))];
     const tags = [...new Set(data.flatMap(e=>e.tags || []))].sort();
 
-    sourceChips.innerHTML = '';
     tagChips.innerHTML = '';
-
-    sourceChips.appendChild(makeChip('All sources', ()=>{ state.source = ''; render(); }));
-    sources.forEach(s => {
-      const label = SOURCE[s]?.label || s;
-      sourceChips.appendChild(makeChip(label, ()=>{ state.source = (state.source===s) ? '' : s; render(); }));
-    });
-
     tagChips.appendChild(makeChip('All tags', ()=>{ state.tag = ''; render(); }));
     tags.slice(0, 10).forEach(t => {
       tagChips.appendChild(makeChip(t, ()=>{ state.tag = (state.tag===t) ? '' : t; render(); }));
