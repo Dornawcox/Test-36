@@ -586,36 +586,40 @@ function renderCard(scope, item) {
     return card;
   }
 
-  // metagov — rich card with cover image, desc, status badge
-  const card = el("article", {class:"pcard metagov-card", "data-theme":"All types", "data-href": item.href});
-  const a = el("a", {class:"pcard__link", href:item.href, target:"_blank", rel:"noopener"});
+  // metagov — matches screenshot 3: left image, bold title, short desc, tag pills, More button
+  const card = el("article", {class:"pcard mg-card", "data-theme":"All types"});
 
-  // Cover image (tall if has real image, compact favicon fallback)
-  const hasImg = !!(item.img);
+  // Left: cover image (portrait crop matching pcard__cover dimensions)
   const imgSrc = item.img || "assets/wg-project-card-placeholder.jpg";
-  const cover = el("div", {class: hasImg ? "pcard__cover pcard__cover--tall" : "pcard__cover pcard__cover--icon"}, [
-    el("img", {
-      src: imgSrc,
-      alt: "",
-      loading: "lazy",
-      onerror: "this.onerror=null;this.src='assets/wg-project-card-placeholder.jpg';"
-    })
+  const cover = el("div", {class:"pcard__cover"}, [
+    el("img", {src:imgSrc, alt:"", loading:"lazy",
+      onerror:"this.onerror=null;this.src='assets/wg-project-card-placeholder.jpg';"})
   ]);
 
-  const pillsChildren = [];
-  if (item.status) pillsChildren.push(el("span", {class: "mini-pill mini-pill--" + (item.status === "Active" ? "active" : "research")}, [item.status]));
-  pillsChildren.push(el("span", {class:"mini-pill"}, ["metagov.org"]));
+  // Right: title + description (capped at 2 lines) + status/source pills
+  const statusClass = item.status === "Active" ? "mini-pill mini-pill--active"
+    : item.status === "Research" ? "mini-pill mini-pill--research"
+    : "mini-pill";
+  const pillsEl = el("div", {class:"pcard__pills"}, [
+    item.status ? el("span", {class:statusClass}, [item.status]) : null,
+    el("span", {class:"mini-pill mini-pill--theme"}, ["Metagov"]),
+  ].filter(Boolean));
 
   const meta = el("div", {class:"pcard__meta"}, [
     el("div", {class:"pcard__title"}, [item.title]),
-    el("div", {class:"pcard__sub"}, [item.desc || "A Metagov project."]),
-    el("div", {class:"pcard__pills"}, pillsChildren)
+    el("div", {class:"pcard__sub mg-card__desc"}, [item.desc || "A Metagov project."]),
+    pillsEl
   ]);
-  const actions = el("div", {class:"pcard__actions"}, [
-    el("span", {class:"pcard__arrow","aria-hidden":"true"}, ["↗"])
-  ]);
-  a.appendChild(cover); a.appendChild(meta); a.appendChild(actions);
-  card.appendChild(a);
+
+  // Action: "More ↗" button linking out
+  const actions = el("div", {class:"pcard__actions"});
+  const moreBtn = el("a", {class:"mg-card__more-btn", href:item.href, target:"_blank", rel:"noopener"}, ["More ↗"]);
+  actions.appendChild(moreBtn);
+
+  // Assemble using the standard pcard__link grid (image | meta | actions)
+  const link = el("div", {class:"pcard__link pcard__link--grid"});
+  link.appendChild(cover); link.appendChild(meta); link.appendChild(actions);
+  card.appendChild(link);
   return card;
 }
 

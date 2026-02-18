@@ -270,39 +270,39 @@
 
   function card(ev){
     const src = SOURCE[ev.source] || { label: ev.source || 'Event', icon:'' };
-    const tags = (ev.tags || []).filter(t => t !== ev.source).slice(0,3)
-      .map(t => `<span class="ev-tag">${escapeHtml(t)}</span>`).join('');
+    const tagList = (ev.tags || []).filter(t => t !== ev.source).slice(0,3);
+    const tagPills = tagList.map(t => `<span class="wg-pill">${escapeHtml(t)}</span>`).join('');
     const startDate = new Date(ev.start);
     const endDate = ev.end ? new Date(ev.end) : null;
     const isMultiDay = endDate && startDate.toDateString() !== endDate.toDateString();
-    const dateFmt = { weekday:'short', month:'short', day:'numeric' };
+    const dateFmt = { weekday:'short', month:'short', day:'numeric', year:'numeric' };
     const startStr = Number.isNaN(startDate.getTime()) ? '' : startDate.toLocaleDateString(undefined, dateFmt);
     const endStr = isMultiDay ? endDate.toLocaleDateString(undefined, dateFmt) : '';
-    const dateRange = isMultiDay ? `${startStr} – ${endStr}` : startStr;
-    const where = ev.location ? ev.location : '';
+    const dateStr = isMultiDay ? `${startStr} → ${endStr}` : startStr;
+    const where = ev.location ? ` • ${ev.location}` : '';
 
     return `
-<article class="event-card">
-  <div class="event-card__head">
-    <div class="event-card__date-block">
-      <div class="event-card__month">${startDate.toLocaleDateString(undefined,{month:'short'})}</div>
-      <div class="event-card__day">${startDate.getDate()}</div>
+<article class="wg-project-card event-card"${src.icon ? ` style="--ev-icon:url('${src.icon}')"` : ''}>
+  <header class="wg-project-card__top">
+    <div class="wg-project-card__main">
+      <h4 class="wg-project-card__name">${escapeHtml(ev.title || 'Untitled event')}</h4>
+      <p class="wg-project-card__one-liner">${escapeHtml(dateStr)}${escapeHtml(where)}</p>
     </div>
-    <div class="event-card__body">
-      <div class="event-card__src-row">
-        ${src.icon ? `<img class="event-card__src-icon" src="${src.icon}" alt="" loading="lazy" />` : ''}
-        <span class="event-card__src-label">${escapeHtml(src.label)}</span>
+    <div class="wg-project-card__meta">
+      <span class="wg-pill ev-src-pill">${escapeHtml(src.label)}</span>
+      ${tagPills}
+    </div>
+  </header>
+  <details class="wg-project-card__details event-details">
+    <summary class="wg-project-card__summary"><span>Details</span><span class="wg-project-card__chev" aria-hidden="true">▾</span></summary>
+    <div class="wg-project-card__body">
+      ${ev.description ? `<p>${escapeHtml(ev.description)}</p>` : ''}
+      <div class="wg-project-card__links">
+        ${ev.url ? `<a href="${escapeHtml(ev.url)}" target="_blank" rel="noopener">Event link ↗</a>` : ''}
+        <a href="calendar.html">Month view ↗</a>
       </div>
-      <h4 class="event-card__title">${escapeHtml(ev.title || 'Untitled event')}</h4>
-      ${isMultiDay ? `<div class="event-card__range">${escapeHtml(dateRange)}</div>` : ''}
-      ${where ? `<div class="event-card__where">${escapeHtml(where)}</div>` : ''}
-      <div class="event-card__tags">${tags}</div>
     </div>
-  </div>
-  <div class="event-card__foot">
-    ${ev.url ? `<a class="event-card__link" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener">Event info ↗</a>` : ''}
-    <a class="event-card__link event-card__link--cal" href="calendar.html">Calendar ↗</a>
-  </div>
+  </details>
 </article>`;
   }
 
