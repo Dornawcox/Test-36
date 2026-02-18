@@ -1404,3 +1404,202 @@ h3{font-size: 22px; margin:0 0 10px 0;}
   border-left: 3px solid rgba(79,181,124,0.90);
   padding-left: 9px;
 }
+
+/* ============================================================
+   NEW EVENT CARDS — compact, date-block style
+   ============================================================ */
+.cal-rail { grid-auto-columns: minmax(240px, 270px) !important; }
+
+.event-card {
+  scroll-snap-align: start;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card__head {
+  display: flex;
+  gap: 12px;
+  padding: 12px 12px 10px 12px;
+  flex: 1;
+}
+
+.event-card__date-block {
+  flex: 0 0 42px;
+  width: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+
+.event-card__month {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.event-card__day {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 1px;
+  color: var(--text);
+  font-family: 'Oswald', sans-serif;
+}
+
+.event-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-card__src-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.event-card__src-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.event-card__src-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-card__title {
+  margin: 0 0 5px 0;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.event-card__range,
+.event-card__where {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.35;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.ev-tag {
+  font-size: 10.5px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(43,43,43,0.04);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.event-card__foot {
+  border-top: 1px solid var(--border);
+  background: rgba(43,43,43,0.02);
+  display: flex;
+  gap: 0;
+}
+
+.event-card__link {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--accent);
+  text-align: center;
+  transition: background 120ms ease;
+  border-right: 1px solid var(--border);
+}
+
+.event-card__link:last-child {
+  border-right: none;
+}
+
+.event-card__link:hover {
+  background: rgba(43,43,43,0.04);
+}
+
+.event-card__link--cal {
+  color: var(--muted);
+}
+
+/* ============================================================
+   METAGOV CARD VARIANTS
+   ============================================================ */
+.pcard__cover--tall {
+  width: 100%;
+  height: 130px;
+  border-radius: 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.pcard__cover--tall img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.02);
+  transition: transform 250ms ease;
+}
+.pcard:hover .pcard__cover--tall img {
+  transform: scale(1.03);
+}
+.pcard__cover--icon {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: linear-gradient(135deg, rgba(47,122,82,0.06), rgba(47,122,82,0.02));
+  border-bottom: 1px solid var(--border);
+}
+.pcard__cover--icon img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+  border: 1px solid var(--border);
+}
+
+/* Status badge variants */
+.mini-pill--active {
+  background: rgba(47,122,82,0.10);
+  color: var(--accent);
+  border-color: rgba(47,122,82,0.22);
+}
+.mini-pill--research {
+  background: rgba(100,80,200,0.08);
+  color: #5544aa;
+  border-color: rgba(100,80,200,0.18);
+}
