@@ -1648,22 +1648,18 @@ h3{font-size: 22px; margin:0 0 10px 0;}
 /* Title row: "Participate" heading + collabathon icon side by side */
 .participate-title-row {
   display: flex;
-  align-items: center;
-  gap: 18px;
+  align-items: baseline;
+  gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 8px;
 }
 
 .participate-icon {
-  height: 52px;       /* icon proportional to h2 */
+  height: 34px;       /* matches h2 font-size exactly */
   width: auto;
-  max-width: 220px;
   object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: #fff;
-  padding: 4px 8px;
   flex-shrink: 0;
+  display: block;
 }
 
 /* Collapsible "Ways to participate" block */
