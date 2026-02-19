@@ -1640,3 +1640,84 @@ h3{font-size: 22px; margin:0 0 10px 0;}
   background: rgba(26,92,53,0.06);
   border-color: #1a5c35;
 }
+
+/* ============================================================
+   PARTICIPATE SECTION — icon in title row + collapsible ways
+   ============================================================ */
+
+/* Title row: "Participate" heading + collabathon icon side by side */
+.participate-title-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.participate-icon {
+  height: 52px;       /* icon proportional to h2 */
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+
+/* Collapsible "Ways to participate" block */
+.participate-ways {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.participate-ways__summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  user-select: none;
+  background: rgba(43,43,43,0.02);
+  border-bottom: 1px solid transparent;
+  transition: background 120ms ease;
+}
+.participate-ways__summary::-webkit-details-marker { display: none; }
+.participate-ways[open] .participate-ways__summary {
+  border-bottom-color: var(--border);
+  background: rgba(43,43,43,0.04);
+}
+.participate-ways__summary:hover {
+  background: rgba(43,43,43,0.05);
+}
+
+.participate-ways__label {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.participate-ways__chev {
+  transition: transform 180ms ease;
+  opacity: 0.65;
+  font-size: 13px;
+}
+.participate-ways[open] .participate-ways__chev {
+  transform: rotate(180deg);
+}
+
+/* Inner events padding when expanded */
+.participate-ways .events {
+  padding: 0 14px 14px 14px;
+}
