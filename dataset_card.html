@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenTEAM · Dataset Card — 1000 Farms Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#1a1a14;--white:#ffffff;--cream:#f7f3ec;--cream-dk:#ede8df;--cream-dkr:#e2dbd0;
+      --line:#ddd8ce;--line-dk:#b8b2a6;--dim:#6b6760;--faint:#9e9a93;
+      --forest:#1e4d2b;--forest-md:#2a6338;--forest-lt:#d4e8d8;--forest-bg:#eaf3ec;
+      --sage:#5a7f5e;--sage-lt:#c8deca;
+      --soil:#6b4226;--soil-md:#8a5a35;--soil-lt:#e8d5c0;--soil-bg:#faf0e6;
+      --clay:#c47a2e;--clay-lt:#fde8c4;--clay-bg:#fff8ec;
+      --loam:#8d9a3e;--loam-lt:#e4eabb;--loam-bg:#f5f8e8;
+      --good:#1e6b3a;--good-bg:#d4edda;--good-border:#a3d4af;
+      --warn:#8a5d00;--warn-bg:#fef3c7;--warn-border:#f5d97e;
+      --info:#1a4f7a;--info-bg:#dbeafe;--info-border:#93c5fd;
+      --restrict:#7c2d12;--restrict-bg:#fee2e2;--restrict-border:#fca5a5;
+      --shadow-sm:0 1px 4px rgba(26,26,20,.07);
+      --shadow:0 4px 20px rgba(26,26,20,.09);
+      --shadow-lg:0 8px 40px rgba(26,26,20,.11);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5;background-image:radial-gradient(ellipse 60% 40% at 20% 80%,rgba(107,66,38,.04) 0%,transparent 70%),radial-gradient(ellipse 50% 35% at 80% 20%,rgba(30,77,43,.04) 0%,transparent 70%)}
+    /* TOPBAR */
+    .topbar{position:sticky;top:0;z-index:20;background:var(--forest);border-bottom:3px solid #16381f;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+    .topbar-inner{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;align-items:stretch;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:700;color:var(--white);text-decoration:none;padding:13px 0}
+    .brand-logo{width:26px;height:26px;flex:0 0 26px}
+    .brand-divider{width:1px;background:rgba(255,255,255,.2);margin:0 14px;align-self:stretch}
+    .brand-sub{font-weight:400;color:rgba(255,255,255,.6);font-size:12px}
+    .brand-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--soil);color:var(--white)}
+    .nav{display:flex;align-items:stretch}
+    .nav a{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);text-decoration:none;padding:0 15px;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,.1);transition:color 120ms,background 120ms}
+    .nav a:hover{color:var(--white);background:rgba(255,255,255,.08)}
+    /* BREADCRUMB */
+    .breadcrumb{max-width:1120px;margin:0 auto;padding:12px 20px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--sage);text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .breadcrumb span{color:var(--line-dk)}
+    /* WRAP & CARD */
+    .wrap{max-width:1120px;margin:0 auto;padding:16px 20px 64px}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow-lg);overflow:hidden}
+    /* HEADER */
+    .header{display:flex;align-items:stretch;border-bottom:2px solid var(--line);background:linear-gradient(135deg,var(--soil-bg) 0%,var(--cream) 50%,var(--forest-bg) 100%);position:relative}
+    .header::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236b4226' fill-opacity='0.025'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+    .thumb{width:210px;flex:0 0 210px;border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;gap:12px;background:linear-gradient(160deg,var(--soil) 0%,#4a2c18 100%);position:relative;overflow:hidden}
+    .thumb::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(255,255,255,0.04)'%3E%3Ccircle cx='10' cy='10' r='1.5'/%3E%3Ccircle cx='30' cy='25' r='1'/%3E%3Ccircle cx='60' cy='15' r='1.5'/%3E%3Ccircle cx='80' cy='40' r='1'/%3E%3Ccircle cx='20' cy='55' r='1.5'/%3E%3Ccircle cx='50' cy='70' r='1'/%3E%3Ccircle cx='75' cy='65' r='1.5'/%3E%3Ccircle cx='40' cy='85' r='1'/%3E%3Ccircle cx='90' cy='85' r='1.5'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+    .dataset-icon{position:relative;z-index:1}
+    .org-name{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);text-align:center}
+    .dataset-type-badge{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:3px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);text-align:center}
+    .titleblock{flex:1;padding:20px 24px;position:relative;z-index:1}
+    .kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soil-md);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .kicker::before{content:'';width:20px;height:2px;background:var(--soil);flex:0 0 20px;display:inline-block}
+    h1{font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;font-style:italic;line-height:1.2;letter-spacing:-.01em;margin:0 0 4px;color:var(--ink)}
+    h1 em{font-style:normal;font-weight:300;font-size:.7em;color:var(--dim);display:block;margin-top:5px}
+    .dataset-title-alt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--soil-md);font-weight:600;margin-bottom:12px;letter-spacing:.02em}
+    .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+    .chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+    .chip.soil{background:var(--soil-bg);color:var(--soil);border:1px solid var(--soil-lt)}
+    .chip.forest{background:var(--forest-bg);color:var(--forest);border:1px solid var(--forest-lt)}
+    .chip.forest.filled{background:var(--forest);color:var(--white);border-color:var(--forest)}
+    .chip.clay{background:var(--clay-bg);color:var(--clay);border:1px solid var(--clay-lt)}
+    .chip.loam{background:var(--loam-bg);color:var(--loam);border:1px solid var(--loam-lt)}
+    .chip svg{width:10px;height:10px;flex:0 0 10px}
+    .subtitle{font-family:'Source Serif 4',Georgia,serif;font-size:14px;color:var(--dim);line-height:1.6;border-top:1px solid var(--line);padding-top:10px}
+    .meta-strip{border-top:1px solid var(--line);margin-top:10px;padding-top:8px;display:flex;flex-wrap:wrap;gap:0}
+    .meta-item{padding:4px 0;margin-right:20px;font-family:'IBM Plex Mono',monospace;font-size:10px;display:flex;align-items:center;gap:5px}
+    .mi-label{color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+    .mi-val{color:var(--ink);font-weight:600}
+    .mi-val a{color:var(--soil-md);text-decoration:none}
+    .mi-val a:hover{text-decoration:underline}
+    .mi-val.open{color:var(--good)}
+    /* TABS */
+    .tabs-section{border-bottom:2px solid var(--line)}
+    .tablist{display:flex;overflow-x:auto;background:var(--cream)}
+    .tablist::-webkit-scrollbar{display:none}
+    .tabbtn{appearance:none;border:none;border-right:1px solid var(--line);background:transparent;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);cursor:pointer;padding:13px 18px;display:flex;align-items:center;gap:7px;white-space:nowrap;flex:0 0 auto;border-bottom:3px solid transparent;transition:background 120ms,color 120ms,border-color 120ms}
+    .tabbtn:hover{background:var(--white);color:var(--soil)}
+    .tabbtn[aria-selected="true"]{background:var(--white);color:var(--soil);border-bottom-color:var(--soil)}
+    .tab-icon{display:flex;align-items:center;width:13px;height:13px;flex:0 0 13px}
+    .tab-icon svg{width:13px;height:13px}
+    .tabpanel{display:none}
+    .tabpanel.active{display:block;animation:panelIn 160ms ease}
+    @keyframes panelIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+    .tab-inner{padding:22px 24px}
+    .tab-summary{font-family:'Source Serif 4',Georgia,serif;font-size:14px;color:var(--dim);margin:0 0 18px;line-height:1.65;max-width:760px}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+    .action-link{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:5px;border:2px solid var(--soil);font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--soil);background:var(--white);text-decoration:none;transition:background 120ms,color 120ms}
+    .action-link svg{width:12px;height:12px;flex:0 0 12px}
+    .action-link:hover{background:var(--soil);color:var(--white)}
+    .action-link.primary{background:var(--soil);color:var(--white)}
+    .action-link.primary:hover{background:var(--soil-md);border-color:var(--soil-md)}
+    .action-link.forest{border-color:var(--forest);color:var(--forest)}
+    .action-link.forest:hover{background:var(--forest);color:var(--white)}
+    .tab-note{font-size:12.5px;color:var(--dim);margin-top:16px;line-height:1.5;padding:10px 14px;background:var(--soil-bg);border-left:3px solid var(--soil);border-radius:0 4px 4px 0}
+    .tab-note strong{color:var(--soil)}
+    /* COVERAGE GRID */
+    .coverage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:16px}
+    .cov-card{border:1px solid var(--line);border-radius:6px;padding:10px;background:var(--cream);text-align:center}
+    .cov-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;line-height:1;margin-bottom:4px}
+    .cov-val.good{color:var(--good)}.cov-val.warn{color:var(--clay)}.cov-val.info{color:var(--info)}
+    .cov-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+    /* SCHEMA TABLE */
+    .schema-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:16px}
+    .schema-table thead th{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--soil);color:var(--white);padding:9px 12px;text-align:left;border:none}
+    .schema-table tbody tr{border-bottom:1px solid var(--line)}
+    .schema-table tbody tr:last-child{border-bottom:none}
+    .schema-table tbody tr:hover{background:var(--soil-bg)}
+    .schema-table td{padding:9px 12px;vertical-align:top}
+    .field-name{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--soil-md);font-size:11.5px}
+    .field-type{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)}
+    .field-desc{color:var(--dim);font-size:12px;line-height:1.4}
+    .field-coverage{display:inline-flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:3px}
+    .field-coverage.full{background:var(--good-bg);color:var(--good);border:1px solid var(--good-border)}
+    .field-coverage.part{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-border)}
+    .field-coverage.rare{background:var(--restrict-bg);color:var(--restrict);border:1px solid var(--restrict-border)}
+    /* ACCESS GRID */
+    .access-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+    .access-card{border-radius:7px;padding:14px}
+    .access-card.open{border:1px solid var(--good-border);background:var(--good-bg)}
+    .access-card.restricted{border:1px solid var(--restrict-border);background:var(--restrict-bg)}
+    .access-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+    .access-label.open{color:var(--good)}.access-label.restricted{color:var(--restrict)}
+    .access-card ul{margin:0;padding-left:16px;font-size:12.5px;color:var(--ink);line-height:1.6}
+    /* TIMELINE */
+    .timeline{display:flex;flex-direction:column;gap:0}
+    .tl-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+    .tl-item:last-child{border-bottom:none}
+    .tl-dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px;margin-top:3px}
+    .tl-dot.release{background:var(--forest)}.tl-dot.update{background:var(--sage)}.tl-dot.pending{background:var(--warn-border);border:2px dashed var(--warn)}
+    .tl-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);width:80px;flex:0 0 80px;margin-top:2px}
+    .tl-title{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:2px}
+    .tl-desc{font-size:12px;color:var(--dim);line-height:1.4}
+    /* FORM */
+    .field-form{display:flex;flex-direction:column;gap:14px;max-width:720px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-group label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soil)}
+    .form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid var(--line);border-radius:5px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--white);outline:none;transition:border-color 120ms}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--soil);box-shadow:0 0 0 3px rgba(107,66,38,.1)}
+    .form-group textarea{resize:vertical;min-height:72px}
+    .form-submit{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:5px;border:2px solid var(--soil);background:var(--soil);color:var(--white);font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;align-self:flex-start;transition:background 120ms}
+    .form-submit:hover{background:var(--soil-md);border-color:var(--soil-md)}
+    #report-confirm{display:none;margin-top:8px;padding:10px 14px;border-radius:5px;background:var(--good-bg);border:1px solid var(--good-border);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--good)}
+    /* GRID */
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;border-top:2px solid var(--line)}
+    .info-panel{padding:22px 24px;border-right:1px solid var(--line)}
+    .panel-heading{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soil);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+    .panel-heading::after{content:'';flex:1;height:1px;background:var(--line)}
+    .info-summary{font-family:'Source Serif 4',Georgia,serif;font-size:13.5px;line-height:1.6;color:var(--ink)}
+    .info-summary .muted{color:var(--dim);font-style:italic}
+    /* DETAILS */
+    details{border:1px solid var(--line);border-radius:6px;background:var(--white);overflow:hidden}
+    details+details{margin-top:8px}
+    summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soil);background:var(--soil-bg);transition:background 120ms}
+    summary:hover{background:var(--soil-lt)}
+    summary::-webkit-details-marker{display:none}
+    details[open]>summary{border-bottom:1px solid var(--line)}
+    .sum-left{display:flex;align-items:center;gap:8px}
+    .sum-left svg{width:12px;height:12px;flex:0 0 12px}
+    .sum-hint{font-weight:400;font-style:italic;color:var(--faint);text-transform:none;letter-spacing:0;font-family:'IBM Plex Sans',sans-serif;font-size:11px}
+    .chev{width:7px;height:7px;flex:0 0 7px;border-right:2px solid var(--soil-md);border-bottom:2px solid var(--soil-md);transform:rotate(-45deg);transition:transform 150ms}
+    details[open]>summary .chev{transform:rotate(45deg)}
+    .details-body{padding:14px 16px;font-size:13px;color:var(--ink);line-height:1.55}
+    .details-body p{margin:0 0 10px}.details-body p:last-child{margin:0}
+    .details-body a{color:var(--soil-md);text-decoration:none}.details-body a:hover{text-decoration:underline}
+    /* DTAP */
+    .dtap-wrap{padding:22px 20px;background:var(--cream)}
+    .dtap-details{border:1px solid var(--line);border-radius:8px;background:var(--white);overflow:hidden;box-shadow:var(--shadow-sm)}
+    .dtap-details>summary{padding:13px 16px;background:linear-gradient(90deg,var(--soil) 0%,var(--soil-md) 100%);color:var(--white);font-size:10.5px;letter-spacing:.1em}
+    .dtap-details>summary:hover{background:linear-gradient(90deg,var(--soil-md) 0%,var(--soil) 100%)}
+    .dtap-details>summary .chev{border-color:rgba(255,255,255,.5)}
+    .dtap-details>summary svg{stroke:white}
+    .dtap-details>summary .sum-hint{color:rgba(255,255,255,.55)}
+    .dtap-body{padding:18px}
+    .dtap-score-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+    .dtap-score-left{display:flex;align-items:flex-end;gap:12px}
+    .dtap-ring{width:72px;height:72px;flex:0 0 72px}
+    .score-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+    .score-sub{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--faint);line-height:1.7}
+    .badge-row{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;justify-content:flex-end}
+    .badge{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;border:1px solid;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+    .badge svg{width:9px;height:9px}
+    .badge.good{background:var(--good-bg);color:var(--good);border-color:var(--good-border)}
+    .badge.warn{background:var(--warn-bg);color:var(--warn);border-color:var(--warn-border)}
+    .badge.info{background:var(--info-bg);color:var(--info);border-color:var(--info-border)}
+    .badge.restrict{background:var(--restrict-bg);color:var(--restrict);border-color:var(--restrict-border)}
+    .section-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+    .dtap-gates{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
+    .dtap-gate{display:flex;gap:9px;align-items:flex-start;padding:10px 11px;border-radius:6px;border:1px solid;font-size:11.5px}
+    .dtap-gate.good{background:var(--good-bg);border-color:var(--good-border)}
+    .dtap-gate.warn{background:var(--warn-bg);border-color:var(--warn-border)}
+    .dtap-gate.info{background:var(--info-bg);border-color:var(--info-border)}
+    .dtap-gate.restrict{background:var(--restrict-bg);border-color:var(--restrict-border)}
+    .gate-mark{width:20px;height:20px;flex:0 0 20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900}
+    .dtap-gate.good .gate-mark{background:var(--good);color:var(--white)}
+    .dtap-gate.warn .gate-mark{background:var(--warn);color:var(--white)}
+    .dtap-gate.info .gate-mark{background:var(--info);color:var(--white)}
+    .dtap-gate.restrict .gate-mark{background:var(--restrict);color:var(--white)}
+    .gate-name{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+    .dtap-gate.good .gate-name{color:var(--good)}.dtap-gate.warn .gate-name{color:var(--warn)}
+    .dtap-gate.info .gate-name{color:var(--info)}.dtap-gate.restrict .gate-name{color:var(--restrict)}
+    .gate-desc{color:var(--dim);display:block;margin-top:2px;font-size:11px;line-height:1.35}
+    .bars{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+    .barRow{display:grid;grid-template-columns:130px 1fr 36px;gap:8px;align-items:center}
+    .barRow .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;color:var(--ink)}
+    .meter{height:9px;background:var(--cream-dkr);border-radius:9px;overflow:hidden}
+    .fill{height:100%;border-radius:9px}
+    .fill.hi{background:linear-gradient(90deg,var(--soil),var(--clay))}
+    .fill.mid{background:linear-gradient(90deg,var(--sage),var(--loam))}
+    .fill.lo{background:linear-gradient(90deg,var(--warn),#d97706)}
+    .val{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);text-align:right}
+    .flags-section{margin-bottom:14px}
+    .flag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:5px;border:1px dashed;font-size:11.5px;margin-right:6px;margin-bottom:6px}
+    .flag.warn{border-color:var(--warn-border);background:var(--warn-bg);color:var(--warn)}
+    .flag.info{border-color:var(--info-border);background:var(--info-bg);color:var(--info)}
+    .flag.good{border-color:var(--good-border);background:var(--good-bg);color:var(--good)}
+    .flag svg{width:11px;height:11px}
+    .dtap-links{padding-top:12px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.04em}
+    .dtap-links strong{color:var(--dim)}
+    .dtap-links a{color:var(--soil-md);text-decoration:none}.dtap-links a:hover{text-decoration:underline}
+    /* CATALOG */
+    .catalog-section{border-top:2px solid var(--line);background:linear-gradient(180deg,var(--cream) 0%,var(--white) 100%)}
+    .catalog-inner{padding:16px 24px 20px}
+    .catalog-heading{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soil);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .catalog-heading::after{content:'';flex:1;height:1px;background:var(--line)}
+    .cat-block{margin-bottom:18px}
+    .cat-block:last-child{margin-bottom:0}
+    .cat-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .cat-label::after{content:'';flex:1;height:1px;background:var(--line)}
+    .dset-rail{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory}
+    .dset-rail::-webkit-scrollbar{height:5px}
+    .dset-rail::-webkit-scrollbar-thumb{background:var(--line-dk);border-radius:3px}
+    .dsetCard{flex:0 0 170px;scroll-snap-align:start;border:1px solid var(--line);border-radius:8px;background:var(--white);text-decoration:none;color:var(--ink);display:flex;flex-direction:column;transition:border-color 120ms,box-shadow 120ms,transform 100ms}
+    .dsetCard:hover{border-color:var(--soil-md);box-shadow:0 3px 14px rgba(107,66,38,.1);transform:translateY(-1px)}
+    .dset-top{height:64px;border-bottom:1px solid var(--line);border-radius:7px 7px 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+    .dset-top img{width:36px;height:36px;object-fit:contain}
+    .dset-access{position:absolute;top:6px;right:6px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:2px}
+    .dset-access.open{background:var(--good-bg);color:var(--good)}
+    .dset-access.cc{background:var(--info-bg);color:var(--info)}
+    .dset-access.restrict{background:var(--restrict-bg);color:var(--restrict)}
+    .dset-body{padding:9px 10px;flex:1}
+    .dset-name{font-weight:700;font-size:11.5px;line-height:1.2;margin-bottom:2px;color:var(--ink)}
+    .dset-org{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+    .dset-type{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--soil-md);font-weight:600}
+    .dset-arrow{font-size:10px;color:var(--faint);padding:0 10px 8px;align-self:flex-end;font-family:'IBM Plex Mono',monospace}
+    /* FOOTER */
+    .foot{padding:12px 24px;background:var(--forest);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .foot a{color:rgba(255,255,255,.75);text-decoration:none}.foot a:hover{color:var(--white)}
+    @media(max-width:820px){.grid{grid-template-columns:1fr}.info-panel{border-right:none;border-bottom:1px solid var(--line)}.form-row{grid-template-columns:1fr}.dtap-gates{grid-template-columns:1fr}.thumb{width:140px;flex:0 0 140px}.access-grid{grid-template-columns:1fr}.barRow{grid-template-columns:100px 1fr 30px}}
+    @media(max-width:560px){.thumb{width:100%;flex:none;height:130px;border-right:none;border-bottom:1px solid var(--line)}.header{flex-wrap:wrap}h1{font-size:20px}}
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/" target="_blank" rel="noopener">
+      <svg class="brand-logo" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="12" stroke="rgba(255,255,255,0.25)" stroke-width="1"/><circle cx="13" cy="6" r="2.5" fill="rgba(255,255,255,0.9)"/><circle cx="6" cy="18" r="2.5" fill="rgba(255,255,255,0.9)"/><circle cx="20" cy="18" r="2.5" fill="rgba(255,255,255,0.9)"/><line x1="13" y1="8.5" x2="6.5" y2="15.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/><line x1="13" y1="8.5" x2="19.5" y2="15.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/><line x1="6" y1="18" x2="20" y2="18" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/></svg>
+      Ag Knowledge Concordance
+      <div class="brand-divider"></div>
+      <span class="brand-sub">Dataset Card</span>
+      <span class="brand-badge">DATA &amp; TRUST</span>
+    </a>
+    <nav class="nav">
+      <a href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/#initiatives" target="_blank" rel="noopener">Library</a>
+      <a href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">OpenTEAM</a>
+      <a href="https://forum.goatech.org" target="_blank" rel="noopener">Forum</a>
+    </nav>
+  </div>
+</div>
+<div class="breadcrumb">
+  <a href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/">AKC</a>
+  <span>›</span><a href="#">Data &amp; Trust</a>
+  <span>›</span><a href="#">Dataset Catalog</a>
+  <span>›</span><span style="color:var(--ink)">1000 Farms Initiative</span>
+</div>
+<div class="wrap"><div class="card">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="thumb">
+      <div class="dataset-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="8" y="48" width="64" height="10" rx="2" fill="rgba(255,255,255,0.12)"/>
+          <rect x="8" y="36" width="64" height="10" rx="2" fill="rgba(255,255,255,0.18)"/>
+          <rect x="8" y="24" width="64" height="10" rx="2" fill="rgba(255,255,255,0.26)"/>
+          <circle cx="20" cy="29" r="3" fill="white" opacity=".9"/>
+          <circle cx="40" cy="31" r="3" fill="white" opacity=".9"/>
+          <circle cx="60" cy="27" r="3" fill="white" opacity=".9"/>
+          <circle cx="30" cy="41" r="2.5" fill="white" opacity=".7"/>
+          <circle cx="52" cy="43" r="2.5" fill="white" opacity=".7"/>
+          <circle cx="25" cy="53" r="2" fill="white" opacity=".5"/>
+          <circle cx="50" cy="55" r="2" fill="white" opacity=".5"/>
+          <circle cx="65" cy="51" r="2" fill="white" opacity=".5"/>
+          <path d="M20 29 L40 31 L60 27" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
+          <line x1="40" y1="24" x2="40" y2="10" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M40 16 C35 12 28 10 25 14" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M40 13 C45 9 52 9 54 13" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="org-name">Ecdysis Foundation</div>
+      <div class="dataset-type-badge">Field Survey · Biometric</div>
+    </div>
+    <div class="titleblock">
+      <div class="kicker">Open Agricultural Dataset · Soil · Biodiversity · Economics</div>
+      <h1>1000 Farms Initiative<em>Continental-scale agroecology field measurement database</em></h1>
+      <div class="dataset-title-alt">ecdysis.bio · 2022–ongoing · North America</div>
+      <div class="chips">
+        <span class="chip forest filled"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H2v8h8V2z"/><path d="M4 6l1.5 1.5L8 4.5"/></svg>Open Access</span>
+        <span class="chip soil"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="8" r="3"/><path d="M6 5V2M4 3.5L6 2l2 1.5"/></svg>Soil Carbon</span>
+        <span class="chip soil"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-3L6 8l1.5-5L9 6"/></svg>Biodiversity</span>
+        <span class="chip clay"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="8" height="8"/><path d="M5 5h2M5 7h2"/></svg>Regenerative Ag</span>
+        <span class="chip loam"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2a4 4 0 0 1 0 8"/><path d="M6 2a4 4 0 0 0 0 8"/><line x1="6" y1="2" x2="6" y2="10"/></svg>Grower Reports</span>
+      </div>
+      <div class="subtitle">One of the most ambitious agroecology field studies in North America — collecting comprehensive biometric inventories (soil carbon, microbiology, insect diversity, bird abundance, crop nutrient analysis, farm economics) from farms in various stages of regenerative transition. Each farm receives an individual Grower Report; the aggregate enables continental-scale analysis.</div>
+      <div class="meta-strip">
+        <div class="meta-item"><span class="mi-label">Records</span>&nbsp;<span class="mi-val">~1,000+ farms</span></div>
+        <div class="meta-item"><span class="mi-label">Coverage</span>&nbsp;<span class="mi-val">N. America</span></div>
+        <div class="meta-item"><span class="mi-label">Updated</span>&nbsp;<span class="mi-val">Annual</span></div>
+        <div class="meta-item"><span class="mi-label">License</span>&nbsp;<span class="mi-val open">Open / Grower-Consented</span></div>
+        <div class="meta-item"><span class="mi-label">Format</span>&nbsp;<span class="mi-val">PDF · CSV (on request)</span></div>
+        <div class="meta-item"><span class="mi-label">Steward</span>&nbsp;<span class="mi-val"><a href="https://www.ecdysis.bio" target="_blank" rel="noopener">Ecdysis Foundation</a></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-section">
+    <div class="tablist" role="tablist" aria-label="Dataset sections">
+      <button class="tabbtn" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" data-tab="overview"><span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="2"/></svg></span>Dataset Overview</button>
+      <button class="tabbtn" role="tab" id="tab-schema" aria-controls="panel-schema" aria-selected="false" data-tab="schema"><span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="10" height="10"/><path d="M5 5h4M5 7h4M5 9h2"/></svg></span>Fields &amp; Schema</button>
+      <button class="tabbtn" role="tab" id="tab-access" aria-controls="panel-access" aria-selected="false" data-tab="access"><span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="8" height="6"/><path d="M5 6V4a2 2 0 1 1 4 0v2"/></svg></span>Access &amp; License</button>
+      <button class="tabbtn" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" data-tab="history"><span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg></span>Update History</button>
+      <button class="tabbtn" role="tab" id="tab-use" aria-controls="panel-use" aria-selected="false" data-tab="use"><span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l3-4 2 3 2-5 3 4"/></svg></span>Log a Use</button>
+    </div>
+
+    <div id="panel-overview" class="tabpanel active" role="tabpanel" aria-labelledby="tab-overview">
+      <div class="tab-inner">
+        <p class="tab-summary">The 1000 Farms Initiative deploys field teams across North America to conduct comprehensive environmental inventories — measuring soil chemistry, microbiology, insect diversity, bird abundance, water dynamics, plant community diversity, pest presence, crop nutrients, and farm economics. The dataset bridges the gap between regenerative agriculture claims and rigorous, farm-level empirical evidence.</p>
+        <div class="coverage-grid">
+          <div class="cov-card"><div class="cov-val good">1000+</div><div class="cov-label">Farms surveyed</div></div>
+          <div class="cov-card"><div class="cov-val good">8</div><div class="cov-label">Measurement categories</div></div>
+          <div class="cov-card"><div class="cov-val warn">2022</div><div class="cov-label">Year launched</div></div>
+          <div class="cov-card"><div class="cov-val info">Annual</div><div class="cov-label">Update cadence</div></div>
+          <div class="cov-card"><div class="cov-val good">15+</div><div class="cov-label">States / provinces</div></div>
+          <div class="cov-card"><div class="cov-val warn">PDF</div><div class="cov-label">Primary format</div></div>
+        </div>
+        <div class="btn-row">
+          <a class="action-link primary" href="https://www.ecdysis.bio/featured-project" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Ecdysis 1000 Farms</a>
+          <a class="action-link forest" href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="3"/><path d="M2 12c0-3 2.5-4.5 5-4.5s5 1.5 5 4.5"/></svg>Ag Knowledge Concordance</a>
+          <a class="action-link" href="https://www.ecdysis.bio/_files/ugd/49b043_6374f59835a34ed98bd8eeb69431c7d1.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1" width="8" height="12"/><path d="M5 5h4M5 7h4M5 9h3"/></svg>Sample Grower Report (PDF)</a>
+        </div>
+        <div class="tab-note"><strong>Relationship-based science:</strong> Ecdysis prioritizes direct farmer relationships — teams visit farms personally, share results back with individual growers, and obtain informed consent before contributing data to aggregate analysis.</div>
+      </div>
+    </div>
+
+    <div id="panel-schema" class="tabpanel" role="tabpanel" aria-labelledby="tab-schema">
+      <div class="tab-inner">
+        <p class="tab-summary">Core measurement fields collected per farm visit. Data is structured for both individual Grower Reports and the aggregate continental dataset. Full schema documentation in progress via the Ag Knowledge Concordance.</p>
+        <table class="schema-table">
+          <thead><tr><th>Field / Measure</th><th>Type</th><th>Description</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td><div class="field-name">soil_organic_carbon</div><div class="field-type">float · %</div></td><td><div class="field-type">Soil</div></td><td class="field-desc">SOC % at multiple depths (0–10cm, 10–30cm). Lab-verified by certified soil labs.</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">soil_microbiology</div><div class="field-type">composite</div></td><td><div class="field-type">Soil</div></td><td class="field-desc">Fungal:bacterial ratio, active carbon, respiration rate, mycorrhizal colonization.</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">insect_diversity_index</div><div class="field-type">integer · species</div></td><td><div class="field-type">Biodiversity</div></td><td class="field-desc">Sweep net + pitfall traps; beneficial vs. pest species ratio per 100 acres.</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">bird_abundance</div><div class="field-type">integer · per 100ac</div></td><td><div class="field-type">Biodiversity</div></td><td class="field-desc">Point count surveys; species richness and abundance by guild (insectivore, granivore).</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">plant_community_diversity</div><div class="field-type">composite</div></td><td><div class="field-type">Vegetation</div></td><td class="field-desc">Shannon diversity index; cover crop species and weed biomass measurements.</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">crop_nutrient_analysis</div><div class="field-type">panel · ppm</div></td><td><div class="field-type">Agronomy</div></td><td class="field-desc">Plant tissue nutrient panel (N, P, K, Ca, Mg, S, micronutrients).</td><td><span class="field-coverage part">Partial</span></td></tr>
+            <tr><td><div class="field-name">water_dynamics</div><div class="field-type">float · mm/hr</div></td><td><div class="field-type">Hydrology</div></td><td class="field-desc">Infiltration rate, water holding capacity, runoff observations per site.</td><td><span class="field-coverage part">Partial</span></td></tr>
+            <tr><td><div class="field-name">farm_economics</div><div class="field-type">composite · USD/ac</div></td><td><div class="field-type">Economics</div></td><td class="field-desc">Net profitability, input costs, yield. Sensitive — aggregate-only reporting.</td><td><span class="field-coverage rare">Restricted</span></td></tr>
+            <tr><td><div class="field-name">management_practices</div><div class="field-type">categorical</div></td><td><div class="field-type">Context</div></td><td class="field-desc">Tillage regime, cover crop mix, synthetic input use, livestock integration stage.</td><td><span class="field-coverage full">Full</span></td></tr>
+            <tr><td><div class="field-name">farm_location_region</div><div class="field-type">string · USDA zone</div></td><td><div class="field-type">Geography</div></td><td class="field-desc">State / province + USDA zone. Exact GPS withheld per farmer consent protocols.</td><td><span class="field-coverage full">Full</span></td></tr>
+          </tbody>
+        </table>
+        <div class="tab-note"><strong>Schema status:</strong> Formal JSON-LD / schema.org vocabulary mapping in progress. Contact the Ag Knowledge Concordance to contribute to the data dictionary or propose Modus-compatible field mappings.</div>
+      </div>
+    </div>
+
+    <div id="panel-access" class="tabpanel" role="tabpanel" aria-labelledby="tab-access">
+      <div class="tab-inner">
+        <p class="tab-summary">The 1000 Farms dataset operates on a grower-consent model. Individual farm-level data is returned to the farmer first; aggregate data is available for research and ecosystem use under specific terms.</p>
+        <div class="access-grid">
+          <div class="access-card open"><div class="access-label open">✓ Public / Open</div><ul><li>Aggregate statistical summaries by region &amp; practice</li><li>Individual Grower Reports (farmer-controlled)</li><li>Sampling methodology documentation</li><li>Published research papers using the dataset</li></ul></div>
+          <div class="access-card restricted"><div class="access-label restricted">⚠ Consent-Gated</div><ul><li>Farm-identified GPS coordinates</li><li>Individual farm economic data</li><li>Farmer identity and contact information</li><li>Raw per-farm biometric records</li></ul></div>
+        </div>
+        <div class="btn-row">
+          <a class="action-link primary" href="https://www.ecdysis.bio/featured-project" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Request Research Access</a>
+          <a class="action-link" href="https://www.ecdysis.bio/_files/ugd/36c4aa_ff7194781c574ebe902c7e89d7cb7d3d.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1" width="8" height="12"/><path d="M5 5h4M5 7h4M5 9h3"/></svg>Sampling Details PDF</a>
+        </div>
+        <div class="tab-note"><strong>Farmer data sovereignty:</strong> Ecdysis returns full data to each participating grower before any aggregation. Farmers choose what enters the shared dataset. This consent model aligns with the Ag Knowledge Concordance "Data &amp; Trust" framework and AKC consent-forward principles.</div>
+      </div>
+    </div>
+
+    <div id="panel-history" class="tabpanel" role="tabpanel" aria-labelledby="tab-history">
+      <div class="tab-inner">
+        <p class="tab-summary">Dataset release history and planned updates. The 1000 Farms Initiative is an ongoing longitudinal study — data accumulates each field season with new cohorts and expanded measurement protocols.</p>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot pending"></div><div class="tl-date">2026 Q2</div><div class="tl-body"><div class="tl-title">Project Ignite release — climate stress cohort</div><div class="tl-desc">Extended dataset including no-till, cover crop + livestock integration farms under extreme climate conditions. Schema additions for drought resilience metrics.</div></div></div>
+          <div class="tl-item"><div class="tl-dot release"></div><div class="tl-date">2025</div><div class="tl-body"><div class="tl-title">Year 3 aggregate report published</div><div class="tl-desc">Continental analysis of 800+ farms. Peer-reviewed papers submitted. Grower Reports v3 issued with regional benchmarks across 15 states.</div></div></div>
+          <div class="tl-item"><div class="tl-dot update"></div><div class="tl-date">2024</div><div class="tl-body"><div class="tl-title">Schema v2: economics + water dynamics added</div><div class="tl-desc">Farm profitability panel added (consent-gated). Infiltration measurements standardized. Bird abundance protocols updated to eBird-compatible format.</div></div></div>
+          <div class="tl-item"><div class="tl-dot release"></div><div class="tl-date">2023</div><div class="tl-body"><div class="tl-title">First public dataset release · 500 farms</div><div class="tl-desc">Soil carbon, insect diversity, and management practice data. Aggregate summaries by state and tillage regime. Grower Reports v1 issued.</div></div></div>
+          <div class="tl-item"><div class="tl-dot release"></div><div class="tl-date">2022</div><div class="tl-body"><div class="tl-title">Initiative launched · sampling protocol established</div><div class="tl-desc">Ecdysis Foundation launched with field teams across 8 states. Sampling methodology published. Grower consent framework developed in partnership with farms.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-use" class="tabpanel" role="tabpanel" aria-labelledby="tab-use">
+      <div class="tab-inner">
+        <p class="tab-summary">Log how you used this dataset — for research, tool development, policy work, or on-farm decision-making. Use logs help the community understand real impact and improve data stewardship practices.</p>
+        <div class="field-form">
+          <div class="form-row">
+            <div class="form-group"><label for="ul-name">Name / org</label><input type="text" id="ul-name" placeholder="e.g. PASA Sustainable Agriculture"></div>
+            <div class="form-group"><label for="ul-date">Date of use</label><input type="date" id="ul-date"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="ul-type">Use type</label><select id="ul-type"><option value="">— select —</option><option>Academic research</option><option>Policy / advocacy</option><option>Tool / software development</option><option>On-farm decision support</option><option>Education / curriculum</option><option>Journalism / media</option><option>Other</option></select></div>
+            <div class="form-group"><label for="ul-fields">Fields / variables used</label><input type="text" id="ul-fields" placeholder="e.g. soil_organic_carbon, insect_diversity_index"></div>
+          </div>
+          <div class="form-group"><label for="ul-purpose">How you used it</label><textarea id="ul-purpose" placeholder="Brief description of your analysis, model, or application…"></textarea></div>
+          <div class="form-group"><label for="ul-output">Output / result (if any)</label><input type="text" id="ul-output" placeholder="e.g. published paper DOI, tool URL, policy brief link…"></div>
+          <div class="form-group"><label for="ul-consent">Data consent acknowledgment</label><select id="ul-consent"><option value="">— select —</option><option>I used aggregate data only (no farm-identified records)</option><option>I received explicit permission from Ecdysis for farm-level data</option><option>I only used publicly published summaries</option></select></div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <button class="form-submit" onclick="submitUse(event)"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Log Dataset Use</button>
+            <span style="font-size:11px;color:var(--faint);font-family:'IBM Plex Mono',monospace;">or discuss on <a href="https://forum.goatech.org" target="_blank" rel="noopener" style="color:var(--soil-md);">GOAT Forum</a></span>
+          </div>
+          <div id="report-confirm">✓ Use logged. (Demo only — wire to Ag Knowledge Concordance backend.)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+    <div class="info-panel">
+      <div class="panel-heading">Dataset Context</div>
+      <div class="info-summary">The 1000 Farms Initiative fills a critical gap: rigorous, farm-level biometric evidence for regenerative agriculture at continental scale.<span class="muted"> Unlike university plot studies, it measures real farms under real management — and returns the data to the farmers first.</span></div>
+      <div style="margin-top:16px;">
+        <details open>
+          <summary><div class="sum-left"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2l1.5 1.5"/></svg>Concordance &amp; Provenance</div><span class="chev"></span></summary>
+          <div class="details-body">
+            <p><strong>Steward:</strong> Ecdysis Foundation · <a href="https://www.ecdysis.bio" target="_blank" rel="noopener">ecdysis.bio</a></p>
+            <p><strong>Indexed by:</strong> <a href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/" target="_blank" rel="noopener">Ag Knowledge Concordance</a> · <a href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">OpenTEAM</a></p>
+            <p><strong>Related datasets:</strong> TSIP National Soil DB · USDA NRCS Web Soil Survey · PASA Farming for the Future · Point Blue Conservation Science · NASA SMAP</p>
+            <p><strong>Cite as:</strong> Ecdysis Foundation (2022–). 1000 Farms Initiative Dataset. ecdysis.bio. Indexed via Ag Knowledge Concordance.</p>
+          </div>
+        </details>
+        <details>
+          <summary><div class="sum-left"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l3-3 2 2 3-4"/></svg>Interoperability &amp; Integration</div><span class="chev"></span></summary>
+          <div class="details-body">
+            <p><strong>Compatible standards:</strong> Modus (soil lab data) · USDA WSS format · eBird (bird surveys) · FAIR data principles</p>
+            <p><strong>Works well with:</strong> farmOS · SurveyStack · TSIP (soil carbon modeling) · Cool Farm Tool (GHG) · Point Blue bird surveys</p>
+            <p><strong>Known gaps:</strong> No formal API yet. Machine-readable aggregate CSV on request. GPS coordinates withheld — regional analysis only. Economics data consent-gated.</p>
+          </div>
+        </details>
+        <details>
+          <summary><div class="sum-left"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="6"/><path d="M4 4V3a2 2 0 1 1 4 0v1"/></svg>Consent &amp; Sovereignty Notes</div><span class="chev"></span></summary>
+          <div class="details-body">
+            <p>Each farm participates voluntarily. Farmers review their Grower Report before any data enters the aggregate pool. Exact farm locations are withheld; analysis uses regional/state-level geography only.</p>
+            <p><strong>Model:</strong> Data returns to farmers first. Economic data requires separate explicit consent and is reported only in aggregate. This aligns with the AKC "Data &amp; Trust" framework: trust before tech, consent-forward sharing, reciprocity and accountability.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- DTAP — open by default -->
+    <div class="dtap-wrap">
+      <details class="dtap-details" open>
+        <summary>
+          <div class="sum-left"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9l-3 1.5.5-3.5L1 4.5 4.5 4z"/></svg>Data Trust Assessment<span class="sum-hint">Score 84 · click to collapse</span></div>
+          <span class="chev"></span>
+        </summary>
+        <div class="dtap-body">
+          <div class="dtap-score-row">
+            <div class="dtap-score-left">
+              <svg class="dtap-ring" viewBox="0 0 72 72">
+                <circle cx="36" cy="36" r="30" fill="none" stroke="#ede8df" stroke-width="8"/>
+                <circle cx="36" cy="36" r="30" fill="none" stroke="url(#dtapGrad)" stroke-width="8" stroke-dasharray="158.3 188.5" stroke-dashoffset="47" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+                <defs><linearGradient id="dtapGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6b4226"/><stop offset="100%" stop-color="#c47a2e"/></linearGradient></defs>
+                <text x="36" y="40" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" font-weight="700" fill="#6b4226">84</text>
+              </svg>
+              <div>
+                <div class="score-title">Data Trust Score</div>
+                <div class="score-sub">0–100 scale<br>Confidence: 2/3<br>Reviewed: 2026-02-20</div>
+              </div>
+            </div>
+            <div class="badge-row">
+              <span class="badge good"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>Farmer consent</span>
+              <span class="badge good"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>FAIR-aligned</span>
+              <span class="badge warn"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v2.5M5 7.5v.5"/></svg>No API yet</span>
+              <span class="badge info"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="3.5"/><path d="M5 3.5v2M5 7v.5"/></svg>Longitudinal</span>
+            </div>
+          </div>
+          <div class="section-label">Trust dimensions</div>
+          <div class="dtap-gates">
+            <div class="dtap-gate good"><div class="gate-mark">✓</div><div><div class="gate-name">D1 Consent</div><span class="gate-desc">Explicit grower consent; data returned to farmer first</span></div></div>
+            <div class="dtap-gate good"><div class="gate-mark">✓</div><div><div class="gate-name">D2 Provenance</div><span class="gate-desc">Clear stewardship, sampling protocol publicly documented</span></div></div>
+            <div class="dtap-gate warn"><div class="gate-mark">~</div><div><div class="gate-name">D3 Access</div><span class="gate-desc">Aggregate open; farm-level requires direct request + consent</span></div></div>
+            <div class="dtap-gate warn"><div class="gate-mark">~</div><div><div class="gate-name">D4 Machine-readable</div><span class="gate-desc">PDF primary format; CSV on request; no API yet</span></div></div>
+            <div class="dtap-gate good"><div class="gate-mark">✓</div><div><div class="gate-name">D5 Longitudinal</div><span class="gate-desc">Annual resurveys enable trend analysis; 3+ year baseline</span></div></div>
+            <div class="dtap-gate info"><div class="gate-mark">ℹ</div><div><div class="gate-name">D6 Governance</div><span class="gate-desc">Ecdysis nonprofit stewardship; formal commons governance developing</span></div></div>
+          </div>
+          <div class="section-label" style="margin-top:14px;">Quality dimensions (0–5)</div>
+          <div class="bars">
+            <div class="barRow"><div class="lbl">Consent rigour</div><div class="meter"><div class="fill hi" style="width:92%"></div></div><div class="val">4.6</div></div>
+            <div class="barRow"><div class="lbl">Scientific validity</div><div class="meter"><div class="fill hi" style="width:90%"></div></div><div class="val">4.5</div></div>
+            <div class="barRow"><div class="lbl">Interoperability</div><div class="meter"><div class="fill mid" style="width:60%"></div></div><div class="val">3.0</div></div>
+            <div class="barRow"><div class="lbl">Discoverability</div><div class="meter"><div class="fill mid" style="width:64%"></div></div><div class="val">3.2</div></div>
+            <div class="barRow"><div class="lbl">Durability</div><div class="meter"><div class="fill mid" style="width:72%"></div></div><div class="val">3.6</div></div>
+          </div>
+          <div class="section-label" style="margin-top:14px;">Flags</div>
+          <div class="flags-section">
+            <span class="flag warn"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v5M6 9v1"/></svg>No machine-readable API — CSV on request only</span>
+            <span class="flag info"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v3"/></svg>Economics data aggregate-only — consent required</span>
+            <span class="flag good"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l2.5 2.5L10 4"/></svg>Model for farmer-sovereign open data in ag</span>
+          </div>
+          <div class="dtap-links"><strong>DTAP DETAILS —</strong> <a href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/" target="_blank" rel="noopener">Ag Knowledge Concordance</a> · <a href="https://www.ecdysis.bio/featured-project" target="_blank" rel="noopener">ecdysis.bio</a> · <a href="https://forum.goatech.org" target="_blank" rel="noopener">discuss on GOAT</a></div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- CATALOG RAILS -->
+  <div class="catalog-section">
+    <div class="catalog-inner">
+      <div class="catalog-heading">Related Open Agricultural Datasets</div>
+      <div class="cat-block"><div class="cat-label">Soil &amp; Carbon Data</div><div class="dset-rail" id="rail-soil"></div></div>
+      <div class="cat-block"><div class="cat-label">Field Observation &amp; Biodiversity</div><div class="dset-rail" id="rail-bio"></div></div>
+      <div class="cat-block"><div class="cat-label">Remote Sensing &amp; Climate</div><div class="dset-rail" id="rail-remote"></div></div>
+      <div class="cat-block"><div class="cat-label">Community &amp; Commons Data Initiatives</div><div class="dset-rail" id="rail-commons"></div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Indexed in <a href="https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/" target="_blank" rel="noopener">Ag Knowledge Concordance</a> · <a href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">OpenTEAM</a> · Data &amp; Trust framework</span>
+    <span>DTAP open by default · Farmer data sovereignty model</span>
+  </div>
+</div></div>
+
+<script>
+const tabs=Array.from(document.querySelectorAll('.tabbtn'));
+const panels=Array.from(document.querySelectorAll('.tabpanel'));
+function activateTab(name,focus=false){tabs.forEach(b=>{const on=b.dataset.tab===name;b.setAttribute('aria-selected',on?'true':'false');if(on&&focus)b.focus()});panels.forEach(p=>p.classList.toggle('active',p.id===`panel-${name}`))}
+tabs.forEach((btn,i)=>{btn.addEventListener('click',()=>activateTab(btn.dataset.tab,true));btn.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();activateTab(tabs[(i+1)%tabs.length].dataset.tab,true)}if(e.key==='ArrowLeft'){e.preventDefault();activateTab(tabs[(i-1+tabs.length)%tabs.length].dataset.tab,true)}if(e.key==='Home'){e.preventDefault();activateTab(tabs[0].dataset.tab,true)}if(e.key==='End'){e.preventDefault();activateTab(tabs[tabs.length-1].dataset.tab,true)}})});
+activateTab('overview',false);
+function submitUse(e){e.preventDefault();document.getElementById('report-confirm').style.display='block'}
+
+const soilDatasets=[
+  {name:'TSIP National Soil DB',org:'Soil Inventory Project',type:'Soil carbon · ensemble',access:'cc',domain:'tsip.org',href:'https://tsip.org/',bg:'#f5f0eb'},
+  {name:'USDA Web Soil Survey',org:'USDA NRCS',type:'Soil survey · national',access:'open',domain:'websoilsurvey.nrcs.usda.gov',href:'https://websoilsurvey.nrcs.usda.gov/',bg:'#eaf3ec'},
+  {name:'Soil Carbon Initiative',org:'Open Env. Data Project',type:'Carbon · commons',access:'open',domain:'www.openenvironmentaldata.org',href:'https://www.openenvironmentaldata.org/',bg:'#f5f0eb'},
+  {name:'NRCS SSURGO/STATSGO2',org:'USDA NRCS',type:'Soil geography · GIS',access:'open',domain:'nrcs.usda.gov',href:'https://www.nrcs.usda.gov/resources/data-and-reports/soil-survey-geographic-database-ssurgo',bg:'#eaf3ec'},
+  {name:'SoilGrids 250m',org:'ISRIC',type:'Soil prediction maps',access:'cc',domain:'soilgrids.org',href:'https://soilgrids.org',bg:'#f5f0eb'},
+  {name:'ISRIC World Soil DB',org:'ISRIC / FAO',type:'Global soil · WoSIS',access:'cc',domain:'www.isric.org',href:'https://www.isric.org/explore/wosis',bg:'#eaf3ec'},
+];
+const bioDatasets=[
+  {name:'1000 Farms (this)',org:'Ecdysis Foundation',type:'Field biometrics',access:'open',domain:'www.ecdysis.bio',href:'https://www.ecdysis.bio/featured-project',bg:'#faf0e6'},
+  {name:'PASA Farming for Future',org:'PASA Sustainable Ag',type:'Farm practice · PA/NE',access:'cc',domain:'pasafarming.org',href:'https://pasafarming.org',bg:'#f5f0eb'},
+  {name:'Point Blue Conservation',org:'Point Blue Science',type:'Bird · grassland data',access:'cc',domain:'www.pointblue.org',href:'https://www.pointblue.org',bg:'#eaf3ec'},
+  {name:'eBird',org:'Cornell Lab Ornithology',type:'Citizen science · birds',access:'open',domain:'ebird.org',href:'https://ebird.org',bg:'#eaf3ec'},
+  {name:'iNaturalist',org:'iNaturalist / CAS',type:'Biodiversity observations',access:'open',domain:'www.inaturalist.org',href:'https://www.inaturalist.org',bg:'#f5f0eb'},
+  {name:'Millpont Ag Observatory',org:'Millpont',type:'Regenerative ag obs.',access:'cc',domain:'millpont.com',href:'https://millpont.com',bg:'#f5f0eb'},
+];
+const remoteDatasets=[
+  {name:'NASA Earthdata / SMAP',org:'NASA',type:'Soil moisture · satellite',access:'open',domain:'earthdata.nasa.gov',href:'https://earthdata.nasa.gov',bg:'#eaf3ec'},
+  {name:'USDA CropScape / CDL',org:'USDA NASS',type:'Cropland data layer',access:'open',domain:'nassgeodata.gmu.edu',href:'https://nassgeodata.gmu.edu/CropScape/',bg:'#eaf3ec'},
+  {name:'NASA MODIS Vegetation',org:'NASA LP DAAC',type:'NDVI · land cover',access:'open',domain:'lpdaac.usgs.gov',href:'https://lpdaac.usgs.gov',bg:'#f5f0eb'},
+  {name:'PRISM Climate',org:'Oregon State Univ.',type:'Precipitation · temp',access:'open',domain:'prism.oregonstate.edu',href:'https://prism.oregonstate.edu',bg:'#eaf3ec'},
+  {name:'NOAA Climate Data Online',org:'NOAA NCEI',type:'Station · gridded wx',access:'open',domain:'www.ncei.noaa.gov',href:'https://www.ncei.noaa.gov/cdo-web/',bg:'#f5f0eb'},
+  {name:'NASA Harvest',org:'NASA / UMD',type:'Crop monitoring · global',access:'open',domain:'nasaharvest.org',href:'https://nasaharvest.org',bg:'#eaf3ec'},
+];
+const commonsDatasets=[
+  {name:'Open Env. Data Project',org:'OEDP',type:'Community data hubs',access:'open',domain:'www.openenvironmentaldata.org',href:'https://www.openenvironmentaldata.org/',bg:'#eaf3ec'},
+  {name:'Ag Knowledge Concordance',org:'AKC Project',type:'Living atlas · index',access:'open',domain:'agricultural-knowledge-concordance.github.io',href:'https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/',bg:'#f5f0eb'},
+  {name:'TSIP Fieldvision',org:'Soil Inventory Project',type:'Soil sampling platform',access:'cc',domain:'tsip.org',href:'https://tsip.org/tech',bg:'#f5f0eb'},
+  {name:'GOAT Forum',org:'GOATech.org',type:'Community knowledge',access:'open',domain:'forum.goatech.org',href:'https://forum.goatech.org',bg:'#eaf3ec'},
+  {name:'SurveyStack',org:'Our Sci / OpenTEAM',type:'Survey · field data',access:'open',domain:'surveystack.io',href:'https://surveystack.io',bg:'#eaf3ec'},
+];
+
+function buildDsetCard(d){
+  const lbl=d.access==='open'?'Open':d.access==='cc'?'CC / Req.':'Restricted';
+  return`<a class="dsetCard" href="${d.href}" target="_blank" rel="noopener"><div class="dset-top" style="background:${d.bg}"><img src="https://www.google.com/s2/favicons?domain=${d.domain}&sz=64" alt="${d.name}" loading="lazy"><span class="dset-access ${d.access}">${lbl}</span></div><div class="dset-body"><div class="dset-name">${d.name}</div><div class="dset-org">${d.org}</div><div class="dset-type">${d.type}</div></div><div class="dset-arrow">↗</div></a>`;
+}
+document.getElementById('rail-soil').innerHTML=soilDatasets.map(buildDsetCard).join('');
+document.getElementById('rail-bio').innerHTML=bioDatasets.map(buildDsetCard).join('');
+document.getElementById('rail-remote').innerHTML=remoteDatasets.map(buildDsetCard).join('');
+document.getElementById('rail-commons').innerHTML=commonsDatasets.map(buildDsetCard).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenTEAM · Software Tool Card — farmOS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       OPENTEAM COLOR PALETTE
+       Forest green nav · Cream page · Sage accents
+       Warm amber · Sky blue · Earth red flags
+    ───────────────────────────────────────────── */
+    :root {
+      /* Core neutrals */
+      --ink:        #1a1a14;
+      --white:      #ffffff;
+      --cream:      #f7f3ec;
+      --cream-dk:   #ede8df;
+      --line:       #ddd8ce;
+      --line-dk:    #b5b0a4;
+      --dim:        #6b6760;
+      --faint:      #9e9a93;
+
+      /* OpenTEAM brand — forest greens */
+      --forest:     #1e4d2b;   /* nav bar, primary CTAs */
+      --forest-md:  #2a6338;   /* hover states */
+      --forest-lt:  #d4e8d8;   /* light green tints */
+      --forest-bg:  #eaf3ec;   /* panel backgrounds */
+      --sage:       #5a7f5e;   /* secondary accent */
+      --sage-lt:    #c8deca;   /* light sage */
+
+      /* Semantic colors for ETA */
+      --good:       #1e6b3a;
+      --good-bg:    #d4edda;
+      --good-border:#a3d4af;
+      --warn:       #8a5d00;
+      --warn-bg:    #fef3c7;
+      --warn-border:#f5d97e;
+      --info:       #1a4f7a;
+      --info-bg:    #dbeafe;
+      --info-border:#93c5fd;
+      --earth:      #7a4520;
+      --earth-bg:   #fde8d0;
+      --earth-border:#f5c49a;
+      --bad:        #8b1a1a;
+      --bad-bg:     #fee2e2;
+      --bad-border: #fca5a5;
+
+      /* Score bar gradient */
+      --bar-hi:     #1e4d2b;
+      --bar-mid:    #5a7f5e;
+      --bar-lo:     #d97706;
+
+      --shadow-sm:  0 1px 4px rgba(30,77,43,.08), 0 1px 2px rgba(30,77,43,.04);
+      --shadow:     0 4px 20px rgba(30,77,43,.10), 0 1px 4px rgba(30,77,43,.06);
+      --shadow-lg:  0 8px 40px rgba(30,77,43,.12), 0 2px 8px rgba(30,77,43,.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--cream);
+      color: var(--ink); font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px; line-height: 1.5;
+    }
+
+    /* ─── Topbar ─── */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--forest);
+      border-bottom: 3px solid #16381f;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .topbar-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: stretch; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: .01em;
+      color: var(--white); text-decoration: none; padding: 13px 0;
+    }
+    .brand-logo {
+      /* OpenTEAM leaf-network mark */
+      width: 28px; height: 28px; flex: 0 0 28px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-divider { width: 1px; background: rgba(255,255,255,.2); margin: 0 14px; align-self: stretch; }
+    .brand-sub {
+      font-weight: 400; color: rgba(255,255,255,.6);
+      font-size: 12px; letter-spacing: .01em;
+    }
+    .nav { display: flex; align-items: stretch; }
+    .nav a {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.65); text-decoration: none;
+      padding: 0 15px; display: flex; align-items: center;
+      border-left: 1px solid rgba(255,255,255,.1);
+      transition: color 120ms, background 120ms;
+    }
+    .nav a:hover { color: var(--white); background: rgba(255,255,255,.08); }
+
+    /* ─── Wrap & Card ─── */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 64px; }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      display: flex; align-items: stretch;
+      border-bottom: 2px solid var(--line);
+      background: linear-gradient(to right, var(--forest-bg), var(--white) 55%);
+    }
+    .thumb {
+      width: 200px; flex: 0 0 200px;
+      border-right: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      padding: 28px; background: var(--forest);
+    }
+    .titleblock { flex: 1; padding: 20px 24px; }
+
+    .kicker {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--sage);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .kicker::before {
+      content: ''; width: 20px; height: 2px;
+      background: var(--forest); flex: 0 0 20px; display: inline-block;
+    }
+
+    h1 {
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 26px; font-weight: 700;
+      line-height: 1.1; letter-spacing: -.02em; margin: 0 0 12px; color: var(--forest);
+    }
+    h1 em {
+      font-style: normal; font-weight: 300; font-size: .68em;
+      color: var(--dim); display: block; margin-top: 5px; letter-spacing: .01em;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 4px; border: 1px solid var(--forest-lt);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--forest); background: var(--forest-bg);
+    }
+    .chip.filled { background: var(--forest); color: var(--white); border-color: var(--forest); }
+    .chip.amber  { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-border); }
+    .chip svg { width: 10px; height: 10px; flex: 0 0 10px; }
+
+    .subtitle { font-size: 13.5px; color: var(--dim); line-height: 1.55; border-top: 1px solid var(--line); padding-top: 10px; }
+
+    .meta-row {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px;
+    }
+    .meta-item {
+      padding: 4px 0; margin-right: 20px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .meta-item .mlabel { color: var(--faint); text-transform: uppercase; letter-spacing: .08em; }
+    .meta-item .mval { color: var(--ink); font-weight: 600; }
+    .meta-item a.mval { color: var(--forest); text-decoration: none; }
+    .meta-item a.mval:hover { text-decoration: underline; }
+
+    /* ─── Tabs ─── */
+    .tabs-section { border-bottom: 2px solid var(--line); }
+    .tablist { display: flex; overflow-x: auto; background: var(--cream); }
+    .tablist::-webkit-scrollbar { display: none; }
+    .tabbtn {
+      appearance: none; border: none; border-right: 1px solid var(--line);
+      background: transparent;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase; color: var(--dim); cursor: pointer;
+      padding: 13px 18px; display: flex; align-items: center; gap: 7px;
+      white-space: nowrap; flex: 0 0 auto;
+      border-bottom: 3px solid transparent;
+      transition: background 120ms, color 120ms, border-color 120ms;
+    }
+    .tabbtn:last-child { border-right: none; }
+    .tabbtn:hover { background: var(--white); color: var(--forest); }
+    .tabbtn[aria-selected="true"] {
+      background: var(--white); color: var(--forest);
+      border-bottom-color: var(--forest); font-weight: 700;
+    }
+    .tab-icon { display: flex; align-items: center; width: 13px; height: 13px; flex: 0 0 13px; }
+    .tab-icon svg { width: 13px; height: 13px; }
+
+    .tabpanel { display: none; }
+    .tabpanel.active { display: block; animation: panelIn 160ms ease; }
+    @keyframes panelIn { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:none; } }
+
+    .tab-inner { padding: 22px 24px; }
+    .tab-summary { font-size: 13.5px; color: var(--dim); margin: 0 0 18px; line-height: 1.55; max-width: 700px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .action-link {
+      display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px;
+      border-radius: 5px; border: 2px solid var(--forest);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--forest); background: var(--white); text-decoration: none;
+      transition: background 120ms, color 120ms;
+    }
+    .action-link svg { width: 12px; height: 12px; flex: 0 0 12px; }
+    .action-link:hover { background: var(--forest); color: var(--white); }
+    .action-link.primary { background: var(--forest); color: var(--white); }
+    .action-link.primary:hover { background: var(--forest-md); border-color: var(--forest-md); }
+
+    .tab-note {
+      font-size: 12px; color: var(--dim); margin-top: 16px; line-height: 1.5;
+      padding: 10px 14px; background: var(--forest-bg);
+      border-left: 3px solid var(--forest); border-radius: 0 4px 4px 0;
+    }
+    .tab-note strong { color: var(--forest); }
+
+    /* ─── Code blocks ─── */
+    .code-block {
+      background: #1a2a1e; color: #c8ddc4;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.65;
+      padding: 14px 16px; overflow-x: auto; border-radius: 6px; margin-bottom: 14px;
+    }
+    .code-block .comment { color: #4a7a4e; }
+    .code-block .cmd { color: #b8e0be; }
+    .code-block .flag { color: #8ab890; }
+
+    /* ─── Install steps ─── */
+    .install-steps { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .install-step { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+    .install-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 48px; flex: 0 0 48px; display: flex; align-items: center; justify-content: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700;
+      background: var(--forest); color: var(--white);
+    }
+    .step-body { flex: 1; padding: 13px 16px; }
+    .step-title { font-weight: 700; font-size: 13px; margin-bottom: 5px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .step-tag {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px;
+      background: var(--forest-bg); color: var(--sage); border: 1px solid var(--forest-lt);
+    }
+    .step-desc { font-size: 12.5px; color: var(--dim); line-height: 1.5; }
+    .inline-code {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+      background: var(--cream); border: 1px solid var(--line); padding: 1px 5px; border-radius: 3px;
+    }
+
+    /* ─── Integrations ─── */
+    .integrations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+    .integration-card {
+      border: 1px solid var(--line); border-radius: 6px; padding: 12px;
+      background: var(--cream); display: flex; gap: 11px; align-items: flex-start;
+      text-decoration: none; color: var(--ink);
+      transition: border-color 120ms, background 120ms, box-shadow 120ms;
+    }
+    .integration-card:hover { border-color: var(--forest); background: var(--forest-bg); box-shadow: var(--shadow-sm); }
+    .int-icon { width: 30px; height: 30px; flex: 0 0 30px; display: flex; align-items: center; justify-content: center; }
+    .int-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .int-name { font-weight: 700; font-size: 12.5px; line-height: 1.2; margin-bottom: 2px; color: var(--ink); }
+    .int-type { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--sage); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .int-note { font-size: 11px; color: var(--dim); margin-top: 3px; line-height: 1.35; }
+
+    /* ─── Field report form ─── */
+    .field-form { display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--forest);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 9px 12px; border: 1px solid var(--line); border-radius: 5px;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
+      color: var(--ink); background: var(--white); outline: none; transition: border-color 120ms;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(30,77,43,.1); }
+    .form-group textarea { resize: vertical; min-height: 76px; }
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px;
+      border-radius: 5px; border: 2px solid var(--forest);
+      background: var(--forest); color: var(--white);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; cursor: pointer; align-self: flex-start;
+      transition: background 120ms;
+    }
+    .form-submit svg { width: 12px; height: 12px; }
+    .form-submit:hover { background: var(--forest-md); border-color: var(--forest-md); }
+    #report-confirm {
+      display: none; margin-top: 8px; padding: 10px 14px; border-radius: 5px;
+      background: var(--good-bg); border: 1px solid var(--good-border);
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--good);
+    }
+
+    /* ─── Grid ─── */
+    .grid { display: grid; grid-template-columns: 1.15fr .85fr; border-top: 2px solid var(--line); }
+    .info-panel { padding: 22px 24px; border-right: 1px solid var(--line); }
+    .panel-heading {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--forest);
+      margin: 0 0 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .panel-heading::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .info-summary { font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+    .info-summary .muted { color: var(--dim); }
+
+    /* ─── details / summary ─── */
+    details { border: 1px solid var(--line); border-radius: 6px; background: var(--white); overflow: hidden; }
+    details + details { margin-top: 8px; }
+    summary {
+      list-style: none; cursor: pointer; padding: 11px 14px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      user-select: none;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--forest); background: var(--forest-bg); transition: background 120ms;
+    }
+    summary:hover { background: var(--forest-lt); }
+    summary::-webkit-details-marker { display: none; }
+    details[open] > summary { border-bottom: 1px solid var(--line); }
+    .sum-left { display: flex; align-items: center; gap: 8px; }
+    .sum-left svg { width: 12px; height: 12px; flex: 0 0 12px; }
+    .sum-hint { font-weight: 400; font-style: italic; color: var(--faint); text-transform: none; letter-spacing: 0; font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; }
+    .chev { width: 7px; height: 7px; flex: 0 0 7px; border-right: 2px solid var(--sage); border-bottom: 2px solid var(--sage); transform: rotate(-45deg); transition: transform 150ms; }
+    details[open] > summary .chev { transform: rotate(45deg); }
+    .details-body { padding: 14px 16px; background: var(--white); font-size: 13px; color: var(--ink); }
+    .details-body p { margin: 0 0 10px; }
+    .details-body p:last-child { margin: 0; }
+    .details-body a { color: var(--forest); text-decoration: none; }
+    .details-body a:hover { text-decoration: underline; }
+
+    /* ─────────────────────────────────────────────
+       ETA PANEL — full color, default OPEN
+    ───────────────────────────────────────────── */
+    .eta-wrap { padding: 22px 20px; background: var(--cream); }
+
+    .eta-details {
+      border: 1px solid var(--line); border-radius: 8px;
+      background: var(--white); overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* summary bar — forest green when closed, slightly lighter when open */
+    .eta-details > summary {
+      padding: 13px 16px;
+      background: var(--forest); color: var(--white);
+      font-size: 10.5px; letter-spacing: .1em; border-radius: 0;
+    }
+    .eta-details > summary:hover { background: var(--forest-md); }
+    .eta-details[open] > summary { border-radius: 0; background: var(--forest); }
+    .eta-details > summary .chev { border-color: rgba(255,255,255,.5); }
+    .eta-details > summary svg { stroke: white; }
+    .eta-details > summary .sum-hint { color: rgba(255,255,255,.55); }
+
+    .eta-body { padding: 18px; }
+
+    /* Score top row */
+    .scoreTop {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap;
+      padding-bottom: 16px; margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .score-left { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+    .bigScore {
+      font-family: 'IBM Plex Mono', monospace; font-size: 64px; font-weight: 700;
+      line-height: 1; color: var(--forest); letter-spacing: -.04em;
+    }
+    .score-ring {
+      width: 72px; height: 72px; flex: 0 0 72px;
+    }
+    .score-meta { }
+    .score-meta .score-title {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      color: var(--ink); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px;
+    }
+    .score-meta .score-sub {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--faint); line-height: 1.7;
+    }
+
+    .badgeRow { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
+      border-radius: 20px; border: 1px solid;
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase; white-space: nowrap;
+    }
+    .badge svg { width: 9px; height: 9px; flex: 0 0 9px; }
+    .badge.good  { background: var(--good-bg);  color: var(--good);  border-color: var(--good-border); }
+    .badge.warn  { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-border); }
+    .badge.info  { background: var(--info-bg);  color: var(--info);  border-color: var(--info-border); }
+    .badge.earth { background: var(--earth-bg); color: var(--earth); border-color: var(--earth-border);}
+
+    /* Gate grid */
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--faint); margin-bottom: 8px; margin-top: 0;
+    }
+    .gates { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+    .gate {
+      display: flex; gap: 9px; align-items: flex-start; padding: 10px 11px;
+      border-radius: 6px; border: 1px solid; font-size: 11.5px;
+    }
+    .gate.pass { background: var(--good-bg);  border-color: var(--good-border); }
+    .gate.warn { background: var(--warn-bg);  border-color: var(--warn-border); }
+    .gate.info { background: var(--info-bg);  border-color: var(--info-border); }
+    .gate-mark {
+      width: 20px; height: 20px; flex: 0 0 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 900;
+    }
+    .gate.pass .gate-mark { background: var(--good); color: var(--white); }
+    .gate.warn .gate-mark { background: var(--warn); color: var(--white); }
+    .gate.info .gate-mark { background: var(--info); color: var(--white); }
+    .gate-name {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .gate.pass .gate-name { color: var(--good); }
+    .gate.warn .gate-name { color: var(--warn); }
+    .gate.info .gate-name { color: var(--info); }
+    .gate-desc { color: var(--dim); display: block; margin-top: 2px; font-size: 11px; line-height: 1.35; }
+
+    /* Score bars */
+    .bars { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+    .barRow { display: grid; grid-template-columns: 118px 1fr 32px; gap: 8px; align-items: center; }
+    .barRow .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--ink); }
+    .meter { height: 9px; background: var(--cream-dk); border-radius: 9px; overflow: hidden; }
+    .fill { height: 100%; border-radius: 9px; }
+    .fill.hi  { background: linear-gradient(90deg, var(--forest), var(--sage)); }
+    .fill.mid { background: linear-gradient(90deg, var(--sage), #8ab870); }
+    .fill.lo  { background: linear-gradient(90deg, var(--warn), #d97706); }
+    .val { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--faint); text-align: right; }
+
+    /* Flags */
+    .flags-section { margin-bottom: 14px; }
+    .flag {
+      display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px;
+      border-radius: 5px; border: 1px dashed var(--warn-border);
+      background: var(--warn-bg); color: var(--warn); font-size: 11.5px;
+      margin-right: 6px; margin-bottom: 6px;
+    }
+    .flag svg { width: 11px; height: 11px; }
+
+    .eta-links {
+      padding-top: 12px; border-top: 1px solid var(--line);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--faint); letter-spacing: .04em;
+    }
+    .eta-links strong { color: var(--dim); }
+    .eta-links a { color: var(--forest); text-decoration: none; }
+    .eta-links a:hover { text-decoration: underline; }
+
+    /* ─── Ecosystem Rails ─── */
+    .rail-section { border-top: 2px solid var(--line); background: var(--cream); }
+    .rail-block { padding: 14px 24px 16px; border-bottom: 1px solid var(--line); }
+    .rail-block:last-child { border-bottom: none; }
+
+    .rail-heading {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--forest);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+    }
+    .rail-heading .rail-sub {
+      font-weight: 400; text-transform: none; letter-spacing: 0;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-style: italic;
+      color: var(--faint);
+    }
+    .rail-heading::after { content: ''; flex: 1; height: 1px; background: var(--line); margin-left: 4px; }
+
+    .rail {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 2px 2px 8px; scroll-snap-type: x mandatory;
+    }
+    .rail::-webkit-scrollbar { height: 5px; }
+    .rail::-webkit-scrollbar-track { background: var(--cream-dk); border-radius: 3px; }
+    .rail::-webkit-scrollbar-thumb { background: var(--line-dk); border-radius: 3px; }
+
+    .railCard {
+      flex: 0 0 148px; scroll-snap-align: start;
+      border: 1px solid var(--line); border-radius: 8px;
+      background: var(--white); text-decoration: none; color: var(--ink);
+      display: flex; flex-direction: column;
+      transition: border-color 120ms, box-shadow 120ms;
+    }
+    .railCard:hover { border-color: var(--forest); box-shadow: 0 2px 10px rgba(30,77,43,.12); }
+    .railImg-wrap {
+      height: 68px; background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid var(--line); border-radius: 7px 7px 0 0;
+    }
+    .railImg-wrap img { width: 36px; height: 36px; object-fit: contain; }
+    .railBody { padding: 8px 10px; flex: 1; }
+    .railTitle { font-weight: 700; font-size: 11.5px; line-height: 1.2; margin-bottom: 3px; color: var(--ink); }
+    .railType { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--sage); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+    .railArrow { font-size: 10px; color: var(--faint); padding: 0 10px 8px; align-self: flex-end; font-family: 'IBM Plex Mono', monospace; }
+
+    /* ─── Footer ─── */
+    .foot {
+      padding: 12px 24px; background: var(--forest);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+      color: rgba(255,255,255,.5); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+    .foot a { color: rgba(255,255,255,.75); text-decoration: none; }
+    .foot a:hover { color: var(--white); }
+    code { background: rgba(255,255,255,.15); color: var(--white); padding: 1px 5px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
+
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+      .info-panel { border-right: none; border-bottom: 1px solid var(--line); }
+      .form-row { grid-template-columns: 1fr; }
+      .gates { grid-template-columns: 1fr; }
+      .thumb { width: 120px; flex: 0 0 120px; }
+    }
+    @media (max-width: 560px) {
+      .thumb { width: 100%; flex: none; height: 130px; border-right: none; border-bottom: 1px solid var(--line); }
+      .header { flex-wrap: wrap; }
+      h1 { font-size: 20px; }
+      .barRow { grid-template-columns: 90px 1fr 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── TOPBAR ─── -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">
+      <div class="brand-logo">
+        <!-- OpenTEAM leaf/network mark -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <circle cx="14" cy="7"  r="3" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="7"  cy="19" r="3" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="21" cy="19" r="3" fill="rgba(255,255,255,0.9)"/>
+          <line x1="14" y1="10" x2="7"  y2="16" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <line x1="14" y1="10" x2="21" y2="16" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <line x1="7"  y1="19" x2="21" y2="19" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+        </svg>
+      </div>
+      OpenTEAM
+      <div class="brand-divider"></div>
+      <span class="brand-sub">Software Tool Card</span>
+    </a>
+    <nav class="nav">
+      <a href="https://dornawcox.github.io/Test-36/index.html#library" target="_blank" rel="noopener">Tools</a>
+      <a href="https://dornawcox.github.io/Test-36/projects.html" target="_blank" rel="noopener">Projects</a>
+      <a href="https://forum.goatech.org/c/openteam" target="_blank" rel="noopener">Forum</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="card">
+
+  <!-- ─── HEADER ─── -->
+  <div class="header">
+    <div class="thumb">
+      <!-- farmOS official logo: green wordmark with leaf/plant icon -->
+      <svg width="130" height="60" viewBox="0 0 130 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Leaf / sprout icon -->
+        <g transform="translate(0, 4)">
+          <!-- Main stem -->
+          <line x1="18" y1="48" x2="18" y2="16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Left leaf -->
+          <path d="M18 30 C10 26 6 18 10 12 C14 10 20 14 18 22" fill="rgba(255,255,255,0.85)"/>
+          <!-- Right leaf -->
+          <path d="M18 24 C26 20 30 12 26 8 C22 6 16 10 18 18" fill="white"/>
+          <!-- Root lines -->
+          <line x1="18" y1="48" x2="12" y2="54" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="18" y1="48" x2="24" y2="54" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="18" y1="50" x2="18" y2="55" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
+        </g>
+        <!-- farmOS wordmark -->
+        <text x="40" y="32" font-family="IBM Plex Sans, sans-serif" font-size="22" font-weight="700" fill="white" letter-spacing="-0.5">farm</text>
+        <text x="88" y="32" font-family="IBM Plex Sans, sans-serif" font-size="22" font-weight="300" fill="rgba(255,255,255,0.85)" letter-spacing="-0.5">OS</text>
+        <!-- Tagline -->
+        <text x="40" y="47" font-family="IBM Plex Mono, monospace" font-size="8" font-weight="400" fill="rgba(255,255,255,0.5)" letter-spacing="0.5">farmos.org</text>
+      </svg>
+    </div>
+
+    <div class="titleblock">
+      <div class="kicker">Software · Farm Management · Web App · Self-hostable</div>
+      <h1>farmOS
+        <em>Open-source farm record keeping &amp; planning platform</em>
+      </h1>
+      <div class="chips">
+        <span class="chip filled">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H2v8h8V2z"/><path d="M4 6l1.5 1.5L8 4.5"/></svg>
+          Open Source
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="6"/><path d="M4 4V3a2 2 0 1 1 4 0v1"/></svg>
+          Self-hostable
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l3-3 2 2 3-4"/></svg>
+          Field-tested
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.5"/><path d="M4 6l1.5 1.5L8 4.5"/></svg>
+          Data Sovereign
+        </span>
+        <span class="chip amber">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2v8"/><circle cx="6" cy="6" r="1.5"/></svg>
+          API / Interoperable
+        </span>
+      </div>
+      <div class="subtitle">
+        A web-based application for farm management, planning, and record-keeping. Built on Drupal with a JSON:API enabling integration with sensors, apps, and data pipelines across the open ag tech ecosystem.
+      </div>
+      <div class="meta-row">
+        <div class="meta-item"><span class="mlabel">License</span>&nbsp;<span class="mval">GPL-2.0</span></div>
+        <div class="meta-item"><span class="mlabel">Language</span>&nbsp;<span class="mval">PHP / JS</span></div>
+        <div class="meta-item"><span class="mlabel">Version</span>&nbsp;<span class="mval">3.x</span></div>
+        <div class="meta-item"><span class="mlabel">Repo</span>&nbsp;<a class="mval" href="https://github.com/farmOS/farmOS" target="_blank" rel="noopener">github.com/farmOS</a></div>
+        <div class="meta-item"><span class="mlabel">Docs</span>&nbsp;<a class="mval" href="https://farmos.org" target="_blank" rel="noopener">farmos.org</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TABS ─── -->
+  <div class="tabs-section">
+    <div class="tablist" role="tablist" aria-label="Tool sections">
+      <button class="tabbtn" role="tab" id="tab-view"   aria-controls="panel-view"   aria-selected="true"  data-tab="view">
+        <span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="2"/></svg></span>
+        View on OpenTEAM
+      </button>
+      <button class="tabbtn" role="tab" id="tab-build"  aria-controls="panel-build"  aria-selected="false" data-tab="build">
+        <span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="4" height="4"/><rect x="8" y="2" width="4" height="4"/><rect x="2" y="8" width="4" height="4"/><path d="M10 8v4M8 10h4"/></svg></span>
+        Setup Guide
+      </button>
+      <button class="tabbtn" role="tab" id="tab-bom"    aria-controls="panel-bom"    aria-selected="false" data-tab="bom">
+        <span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="10" height="10"/><path d="M5 5h4M5 7h4M5 9h2"/></svg></span>
+        Integrations
+      </button>
+      <button class="tabbtn" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false" data-tab="report">
+        <span class="tab-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v8M4 8l3 3 3-3"/><path d="M2 13h10"/></svg></span>
+        Add Use Report
+      </button>
+    </div>
+
+    <!-- VIEW -->
+    <div id="panel-view" class="tabpanel active" role="tabpanel" aria-labelledby="tab-view">
+      <div class="tab-inner">
+        <p class="tab-summary">farmOS is a core allied tool in the OpenTEAM ecosystem — open-source, interoperable, and farmer data-sovereign. View the canonical project page and community context below.</p>
+        <div class="btn-row">
+          <a class="action-link primary" href="https://farmos.org" target="_blank" rel="noopener">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            Open farmOS.org
+          </a>
+          <a class="action-link" href="https://github.com/farmOS/farmOS" target="_blank" rel="noopener">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="3"/><path d="M2 12c0-3 2.5-4.5 5-4.5s5 1.5 5 4.5"/></svg>
+            GitHub Repository
+          </a>
+          <a class="action-link" href="https://forum.goatech.org" target="_blank" rel="noopener">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h10v7H2z"/><path d="M5 12l2-2h5"/></svg>
+            GOAT Forum
+          </a>
+        </div>
+        <div class="tab-note">
+          <strong>OpenTEAM context:</strong> farmOS integrates with SurveyStack, Hylo, and other ecosystem tools via its JSON:API. It serves as a core data backbone for several OpenTEAM collabathons and pilot farms.
+        </div>
+      </div>
+    </div>
+
+    <!-- SETUP GUIDE -->
+    <div id="panel-build" class="tabpanel" role="tabpanel" aria-labelledby="tab-build">
+      <div class="tab-inner">
+        <p class="tab-summary">Setup and self-hosting instructions. farmOS runs on Docker, shared hosting, or managed via farmier.com. Requires PHP 8.1+ and a database.</p>
+        <div class="install-steps">
+          <div class="install-step"><div class="step-num">01</div><div class="step-body"><div class="step-title">Requirements check <span class="step-tag">5 min</span></div><div class="step-desc">PHP 8.1+, MySQL/PostgreSQL, Composer. Or use Docker. Minimum 256 MB RAM; 512 MB recommended for production. Run <span class="inline-code">php --version</span> to verify.</div></div></div>
+          <div class="install-step"><div class="step-num">02</div><div class="step-body"><div class="step-title">Clone &amp; install via Composer <span class="step-tag">10 min</span></div><div class="step-desc"><div class="code-block"><span class="comment"># Create new farmOS project</span>
+<span class="cmd">composer create-project farmier/farmos-project myfarmos</span>
+<span class="cmd">cd myfarmos</span>
+<span class="comment"># Or pull Docker image</span>
+<span class="cmd">docker pull farmos/farmos:3.x</span></div></div></div></div>
+          <div class="install-step"><div class="step-num">03</div><div class="step-body"><div class="step-title">Database &amp; environment config <span class="step-tag">10 min</span></div><div class="step-desc">Create a MySQL or PostgreSQL database. Copy <span class="inline-code">.env.example</span> to <span class="inline-code">.env</span> and set <span class="inline-code">DB_URL</span> and <span class="inline-code">APP_KEY</span>. For Docker, use environment variables in compose file.</div></div></div>
+          <div class="install-step"><div class="step-num">04</div><div class="step-body"><div class="step-title">Run installer &amp; enable modules <span class="step-tag">15 min</span></div><div class="step-desc"><div class="code-block"><span class="cmd">drush site:install farm <span class="flag">--account-name=admin \</span></span>
+<span class="flag">  --account-pass=changeme \</span>
+<span class="flag">  --db-url=mysql://user:pass@localhost/farmos</span>
+<span class="cmd">drush pm:enable farm_quantity_standard farm_sensor</span></div></div></div></div>
+          <div class="install-step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Configure API &amp; data connections <span class="step-tag">20 min</span></div><div class="step-desc">Enable <span class="inline-code">farm_api</span> module. Authorize OAuth2 clients for SurveyStack, Field Kit, or custom integrations. Review data sharing scopes under <strong>Admin → API → Clients</strong>.</div></div></div>
+        </div>
+        <div class="btn-row" style="margin-top:16px;">
+          <a class="action-link primary" href="https://farmos.org/hosting/install/" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Full Install Docs</a>
+          <a class="action-link" href="https://farmier.com" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5.5"/><path d="M5 7h4M7 5v4"/></svg>Managed Hosting</a>
+        </div>
+        <div class="tab-note"><strong>Managed option:</strong> farmier.com provides hosted farmOS instances with automated updates. Recommended for farms without server admin capacity.</div>
+      </div>
+    </div>
+
+    <!-- INTEGRATIONS -->
+    <div id="panel-bom" class="tabpanel" role="tabpanel" aria-labelledby="tab-bom">
+      <div class="tab-inner">
+        <p class="tab-summary">farmOS integrates with sensors, mobile apps, data standards, and ecosystem platforms via its open JSON:API. Key integrations relevant to the OpenTEAM ecosystem:</p>
+        <div class="integrations-grid" id="integrations-grid"></div>
+        <div class="btn-row" style="margin-top:16px;">
+          <a class="action-link primary" href="https://farmos.org/development/module/" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Module Docs</a>
+          <a class="action-link" href="https://github.com/farmOS" target="_blank" rel="noopener"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="3"/><path d="M2 12c0-3 2.5-4.5 5-4.5s5 1.5 5 4.5"/></svg>GitHub Org</a>
+        </div>
+        <div class="tab-note"><strong>Data standards:</strong> farmOS supports OADA and is working toward Modus / AgGateway soil data interoperability for seamless lab data import.</div>
+      </div>
+    </div>
+
+    <!-- ADD USE REPORT -->
+    <div id="panel-report" class="tabpanel" role="tabpanel" aria-labelledby="tab-report">
+      <div class="tab-inner">
+        <p class="tab-summary">Share your experience: context (farm scale, use case, integrations used), what worked, what didn't, and any workarounds. Use reports improve the ecosystem for everyone.</p>
+        <div class="field-form">
+          <div class="form-row">
+            <div class="form-group"><label for="fr-name">Name / org</label><input type="text" id="fr-name" placeholder="e.g. Jane — Green Hollow Farm"></div>
+            <div class="form-group"><label for="fr-date">Date</label><input type="date" id="fr-date"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="fr-usecase">Primary use case</label>
+              <select id="fr-usecase"><option value="">— select —</option><option>Field &amp; crop records</option><option>Livestock management</option><option>Soil health tracking</option><option>Sensor / IoT data pipeline</option><option>Research &amp; monitoring</option><option>Multi-farm / cooperative</option><option>Other</option></select>
+            </div>
+            <div class="form-group"><label for="fr-scale">Farm / org scale</label>
+              <select id="fr-scale"><option value="">— select —</option><option>Small (&lt;50 acres / personal)</option><option>Medium (50–500 acres)</option><option>Large (500+ acres)</option><option>Research / institution</option><option>Cooperative / multi-farm</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label for="fr-worked">What worked well</label><textarea id="fr-worked" placeholder="e.g. Easy API integration with SurveyStack, strong offline mobile support…"></textarea></div>
+          <div class="form-group"><label for="fr-failed">What was difficult or missing</label><textarea id="fr-failed" placeholder="e.g. Setup complexity for non-technical users, needed custom module for X…"></textarea></div>
+          <div class="form-group"><label for="fr-integrations">Integrations you used</label><input type="text" id="fr-integrations" placeholder="e.g. SurveyStack, Field Kit, Python API client…"></div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <button class="form-submit" onclick="submitReport(event)"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Submit Use Report</button>
+            <span style="font-size:11px;color:var(--faint);font-family:'IBM Plex Mono',monospace;">Or post on <a href="https://forum.goatech.org" target="_blank" rel="noopener" style="color:var(--forest);">GOAT Forum</a></span>
+          </div>
+          <div id="report-confirm">✓ Use report recorded. (Demo only — wire to backend or form service.)</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tabs-section -->
+
+  <!-- ─── GRID: Info + ETA ─── -->
+  <div class="grid">
+
+    <div class="info-panel">
+      <div class="panel-heading">About this tool</div>
+      <div class="info-summary">
+        farmOS is a web-based application for farm management, planning, and record keeping. Provides a structured, open API enabling data flows between sensors, mobile apps, and analysis pipelines.
+        <span class="muted"> Designed for farmer data sovereignty: self-hosted or managed, with full data portability.</span>
+      </div>
+      <div style="margin-top:16px;">
+        <details open>
+          <summary>
+            <div class="sum-left">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v3l-3 3h6L6 5V2z"/><path d="M3 8v2h6V8"/></svg>
+              Project Links &amp; Context
+            </div>
+            <span class="chev"></span>
+          </summary>
+          <div class="details-body">
+            <p><strong>Source &amp; documentation</strong><br><a href="https://github.com/farmOS/farmOS" target="_blank" rel="noopener">github.com/farmOS/farmOS</a> · <a href="https://farmos.org" target="_blank" rel="noopener">farmos.org docs</a></p>
+            <p><strong>Community</strong><br><a href="https://forum.goatech.org/c/farmhack" target="_blank" rel="noopener">GOAT Forum — farmOS channel</a> · <a href="https://www.hylo.com/groups/openteam" target="_blank" rel="noopener">OpenTEAM on Hylo</a></p>
+            <p><strong>Standards &amp; interoperability</strong><br>JSON:API · OADA · Modus (soil data) · OAuth2</p>
+            <p><strong>Alternative approaches</strong><br>LiteFarm (managed, simpler UI) · FieldBee · Granular · Ag Leader SMS (proprietary).</p>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <div class="sum-left">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="6"/><path d="M4 4V3a2 2 0 1 1 4 0v1"/></svg>
+              License &amp; Governance
+            </div>
+            <span class="chev"></span>
+          </summary>
+          <div class="details-body">
+            <p><strong>License:</strong> GPL-2.0-or-later. All data stored by the user remains owned by the user.</p>
+            <p><strong>Governance:</strong> Community-maintained. Core maintainer: Paul Weidner. Contributions via GitHub pull requests. No VC funding or lock-in risk.</p>
+            <p><strong>Funding:</strong> Grants, farmier.com hosting revenue, and community contributors.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ─── ETA — FULL COLOR, DEFAULT OPEN ─── -->
+    <div class="eta-wrap">
+      <details class="eta-details" open aria-label="Ethical Technology Assessment">
+        <summary>
+          <div class="sum-left">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9l-3 1.5.5-3.5L1 4.5 4.5 4z"/></svg>
+            Ethical Technology Assessment
+            <span class="sum-hint">Score 91 · click to collapse</span>
+          </div>
+          <span class="chev"></span>
+        </summary>
+
+        <div class="eta-body">
+
+          <!-- Score + badges -->
+          <div class="scoreTop">
+            <div class="score-left">
+              <!-- Donut ring SVG -->
+              <svg class="score-ring" viewBox="0 0 72 72">
+                <circle cx="36" cy="36" r="30" fill="none" stroke="#e8f3ec" stroke-width="8"/>
+                <!-- 91% arc: circumference = 2π×30 ≈ 188.5; 91% = 171.5 -->
+                <circle cx="36" cy="36" r="30" fill="none"
+                  stroke="url(#scoreGrad)" stroke-width="8"
+                  stroke-dasharray="171.5 188.5"
+                  stroke-dashoffset="47"
+                  stroke-linecap="round"
+                  transform="rotate(-90 36 36)"/>
+                <defs>
+                  <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%"   stop-color="#1e4d2b"/>
+                    <stop offset="100%" stop-color="#5a7f5e"/>
+                  </linearGradient>
+                </defs>
+                <text x="36" y="40" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" font-weight="700" fill="#1e4d2b">91</text>
+              </svg>
+              <div class="score-meta">
+                <div class="score-title">Ethical Tech Score</div>
+                <div class="score-sub">0–100 scale<br>Confidence: 3/3<br>Reviewed: 2026-02-19</div>
+              </div>
+            </div>
+            <div class="badgeRow">
+              <span class="badge good"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>Data sovereign</span>
+              <span class="badge good"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>Open source</span>
+              <span class="badge good"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>Interoperable</span>
+              <span class="badge warn"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v2.5M5 7.5v.5"/></svg>Setup barrier</span>
+            </div>
+          </div>
+
+          <!-- Gates -->
+          <div class="section-label">Entry gates</div>
+          <div class="gates">
+            <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G1 Transparency</div><span class="gate-desc">Full source code, open API, public roadmap</span></div></div>
+            <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G2 Data Control</div><span class="gate-desc">User owns all data; full export, self-hostable</span></div></div>
+            <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G3 No Lock-in</div><span class="gate-desc">GPL license, portable data, no vendor dependency</span></div></div>
+            <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G4 Stewardship</div><span class="gate-desc">Active maintenance, community governance, docs</span></div></div>
+          </div>
+
+          <!-- Score bars -->
+          <div class="section-label" style="margin-top:14px;">Category scores (0–5)</div>
+          <div class="bars">
+            <div class="barRow"><div class="lbl">Data ethics</div><div class="meter"><div class="fill hi" style="width:96%"></div></div><div class="val">4.8</div></div>
+            <div class="barRow"><div class="lbl">Interop</div><div class="meter"><div class="fill hi" style="width:88%"></div></div><div class="val">4.4</div></div>
+            <div class="barRow"><div class="lbl">Commons fit</div><div class="meter"><div class="fill mid" style="width:90%"></div></div><div class="val">4.5</div></div>
+            <div class="barRow"><div class="lbl">Accessibility</div><div class="meter"><div class="fill lo" style="width:62%"></div></div><div class="val">3.1</div></div>
+          </div>
+
+          <!-- Flags -->
+          <div class="section-label" style="margin-top:14px;">Flags</div>
+          <div class="flags-section">
+            <span class="flag">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v5M6 9v1"/><path d="M3 4.5L6 2l3 2.5"/></svg>
+              Technical setup barrier for non-dev users
+            </span>
+          </div>
+
+          <div class="eta-links">
+            <strong>ETA DETAILS —</strong>
+            <a href="https://farmos.org" target="_blank" rel="noopener">farmos.org docs</a> ·
+            <a href="https://forum.goatech.org" target="_blank" rel="noopener">discuss on GOAT</a> ·
+            <a href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">OpenTEAM context</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- ─── ECOSYSTEM RAIL ─── -->
+  <div class="rail-section">
+    <div style="padding:16px 24px 4px;">
+      <div class="panel-heading">Tool, Communities &amp; Platforms Ecosystem</div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-heading">Tools <span class="rail-sub">software &amp; platforms</span></div>
+      <div class="rail" id="rail-tools"></div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-heading">Communities <span class="rail-sub">networks &amp; forums</span></div>
+      <div class="rail" id="rail-communities"></div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-heading">Standards &amp; Platforms <span class="rail-sub">data &amp; infrastructure</span></div>
+      <div class="rail" id="rail-platforms"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Data sourced from <a href="https://dornawcox.github.io/Test-36/index.html" target="_blank" rel="noopener">OpenTEAM ecosystem</a> · Save as <code>index.html</code> for GitHub Pages</span>
+    <span>ETA: collapsible, default open · Tabs: default "View on OpenTEAM"</span>
+  </div>
+
+</div><!-- /card -->
+</div><!-- /wrap -->
+
+<script>
+  // ── Tabs ──
+  const tabs   = Array.from(document.querySelectorAll('.tabbtn'));
+  const panels = Array.from(document.querySelectorAll('.tabpanel'));
+  function activateTab(name, focus=false) {
+    tabs.forEach(btn => { const on = btn.dataset.tab===name; btn.setAttribute('aria-selected',on?'true':'false'); if(on&&focus) btn.focus(); });
+    panels.forEach(p => p.classList.toggle('active', p.id===`panel-${name}`));
+  }
+  tabs.forEach((btn,i) => {
+    btn.addEventListener('click', ()=>activateTab(btn.dataset.tab,true));
+    btn.addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight'){e.preventDefault();activateTab(tabs[(i+1)%tabs.length].dataset.tab,true);}
+      if(e.key==='ArrowLeft'){e.preventDefault();activateTab(tabs[(i-1+tabs.length)%tabs.length].dataset.tab,true);}
+      if(e.key==='Home'){e.preventDefault();activateTab(tabs[0].dataset.tab,true);}
+      if(e.key==='End'){e.preventDefault();activateTab(tabs[tabs.length-1].dataset.tab,true);}
+    });
+  });
+  activateTab('view', false);
+
+  // ── Field report ──
+  function submitReport(e) { e.preventDefault(); document.getElementById('report-confirm').style.display='block'; }
+
+  // ── Ecosystem rails from OpenTEAM ──
+  const ecosystemTools = [
+    { name:'farmOS',               type:'Tool',                   domain:'farmos.org',              href:'https://farmos.org' },
+    { name:'LiteFarm',             type:'Tool',                   domain:'litefarm.org',            href:'https://litefarm.org' },
+    { name:'SurveyStack',          type:'Data collection',        domain:'surveystack.io',          href:'https://surveystack.io' },
+    { name:'landPKS',              type:'Tool / platform',        domain:'landpks.terraso.org',     href:'https://landpks.terraso.org' },
+    { name:'Cool Farm Tool',       type:'Metrics & calculator',   domain:'coolfarm.org',            href:'https://coolfarm.org' },
+    { name:'IC Foods',             type:'Food system tool',       domain:'www.icfoods.org',         href:'https://www.icfoods.org' },
+    { name:'Foodicons',            type:'Visual lexicon',         domain:'lexiconoffood.com',       href:'https://lexiconoffood.com/lex-icons/library/' },
+    { name:'RegenScore',           type:'Regen scoring',          domain:'www.regenscore.org',      href:'https://www.regenscore.org' },
+    { name:'Entidad',              type:'Identity & credentials', domain:'www.entidad.io',          href:'https://www.entidad.io' },
+    { name:'Ag Knowledge Concordance', type:'Living atlas',       domain:'github.com',              href:'https://agricultural-knowledge-concordance.github.io/Ag-Knowledge-Concordance/' },
+  ];
+  const ecosystemCommunities = [
+    { name:'Hylo',              type:'Community platform',      domain:'www.hylo.com',                href:'https://www.hylo.com/' },
+    { name:'Open Food Network', type:'Community & platform',    domain:'openfoodnetwork.org',         href:'https://openfoodnetwork.org' },
+    { name:'IndigiDAO',         type:'Community governance',    domain:'indigidao.org',               href:'https://indigidao.org' },
+    { name:'GOSH',              type:'Open hardware',           domain:'openhardware.science',        href:'https://openhardware.science' },
+    { name:'Open Env. Data',    type:'Data commons',            domain:'www.openenvironmentaldata.org',href:'https://www.openenvironmentaldata.org' },
+    { name:'FarmHack',          type:'Open-source farming',     domain:'farmhack.org',                href:'https://farmhack.org' },
+    { name:'GOAT',              type:'Community',               domain:'goatech.org',                 href:'https://goatech.org' },
+    { name:'GIAA',              type:'Agroecology network',     domain:'www.gia-agroecology.org',     href:'https://www.gia-agroecology.org' },
+    { name:'Cool Farm Alliance',type:'Alliance',                domain:'coolfarm.org',                href:'https://coolfarm.org/join-us/' },
+    { name:'KOI Pond',          type:'Governance knowledge',    domain:'metagov.org',                 href:'https://metagov.org/projects/koi-pond' },
+  ];
+  const ecosystemPlatforms = [
+    { name:'Terraso',              type:'Project',               domain:'terraso.org',             href:'https://terraso.org' },
+    { name:'Better Deal for Data', type:'Project',               domain:'www.betterdealfordata.org',href:'https://www.betterdealfordata.org' },
+    { name:'Modus / AgGateway',    type:'Data standards',        domain:'aggateway.org',           href:'https://aggateway.org' },
+    { name:'Float',                type:'Community governance',  domain:'github.com',              href:'https://github.com/search?q=float+farm' },
+    { name:'Field to Market',      type:'Sustainability alliance',domain:'fieldtomarket.org',      href:'https://fieldtomarket.org' },
+    { name:'OpenTEAM',             type:'Ecosystem platform',    domain:'dornawcox.github.io',     href:'https://dornawcox.github.io/Test-36/index.html' },
+  ];
+
+  function buildRailCard(item) {
+    return `
+      <a class="railCard" href="${item.href}" target="_blank" rel="noopener">
+        <div class="railImg-wrap">
+          <img src="https://www.google.com/s2/favicons?domain=${item.domain}&sz=64" alt="${item.name}" loading="lazy">
+        </div>
+        <div class="railBody">
+          <div class="railTitle">${item.name}</div>
+          <div class="railType">${item.type}</div>
+        </div>
+        <div class="railArrow">↗</div>
+      </a>`;
+  }
+  document.getElementById('rail-tools').innerHTML       = ecosystemTools.map(buildRailCard).join('');
+  document.getElementById('rail-communities').innerHTML = ecosystemCommunities.map(buildRailCard).join('');
+  document.getElementById('rail-platforms').innerHTML   = ecosystemPlatforms.map(buildRailCard).join('');
+
+  // ── Integrations grid ──
+  const integrations = [
+    { name:'SurveyStack',      type:'Data collection', domain:'surveystack.io',   href:'https://surveystack.io',  note:'Native integration via farmOS API' },
+    { name:'Field Kit',        type:'Mobile app',      domain:'farmos.org',       href:'https://farmos.org/guide/app/', note:'Official offline-capable mobile app' },
+    { name:'farmOS Map',       type:'Mapping module',  domain:'farmos.org',       href:'https://farmos.org',      note:'GeoJSON, WKT geometry support' },
+    { name:'Hylo',             type:'Community',       domain:'www.hylo.com',     href:'https://www.hylo.com',    note:'Community discussions + project context' },
+    { name:'LiteFarm',         type:'Alt tool',        domain:'litefarm.org',     href:'https://litefarm.org',    note:'Cross-platform via OADA standards' },
+    { name:'Modus / AgGateway',type:'Data standard',   domain:'aggateway.org',    href:'https://aggateway.org',   note:'Soil test data import/export' },
+    { name:'OADA',             type:'Data protocol',   domain:'openag.io',        href:'https://openag.io',       note:'Open Ag Data Alliance connector' },
+    { name:'Sensor modules',   type:'IoT',             domain:'farmos.org',       href:'https://farmos.org/guide/assets/sensor/', note:'MQTT, LoRa, HTTP listeners' },
+    { name:'n8n / Zapier',     type:'Automation',      domain:'n8n.io',           href:'https://n8n.io',          note:'Trigger workflows via JSON:API' },
+    { name:'QGIS',             type:'GIS',             domain:'qgis.org',         href:'https://qgis.org',        note:'Import GeoJSON layers from farmOS' },
+    { name:'farmOS.py',        type:'Python client',   domain:'github.com',       href:'https://github.com/farmOS/farmOS.py', note:'Official Python API client' },
+    { name:'Cool Farm Tool',   type:'Carbon metrics',  domain:'coolfarm.org',     href:'https://coolfarm.org',    note:'Export records for GHG calculations' },
+  ];
+  document.getElementById('integrations-grid').innerHTML = integrations.map(item => `
+    <a class="integration-card" href="${item.href}" target="_blank" rel="noopener">
+      <div class="int-icon"><img src="https://www.google.com/s2/favicons?domain=${item.domain}&sz=64" alt="${item.name}" loading="lazy"></div>
+      <div>
+        <div class="int-name">${item.name}</div>
+        <div class="int-type">${item.type}</div>
+        <div class="int-note">${item.note}</div>
+      </div>
+    </a>`).join('');
+</script>
+</body>
+</html>
