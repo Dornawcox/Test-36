@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Farm Hack · Hoop Chicken Trailer</title>
+
+  <!-- Matching FarmHack.org typographic feel: bold geometric sans + mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Design tokens: strict black & white, utilitarian ─── */
+    :root {
+      --black:   #0a0a0a;
+      --white:   #ffffff;
+      --off:     #f5f5f3;
+      --paper:   #fafaf8;
+      --line:    #d8d8d4;
+      --line-dk: #aaaaaa;
+      --dim:     #666660;
+      --faint:   #999990;
+      --shadow:  0 2px 12px rgba(10,10,10,.07), 0 1px 2px rgba(10,10,10,.05);
+      --shadow-lg: 0 6px 32px rgba(10,10,10,.10), 0 2px 6px rgba(10,10,10,.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--off);
+      color: var(--black);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ─── Topbar ─── */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--black);
+      border-bottom: 2px solid var(--black);
+    }
+    .topbar-inner {
+      max-width: 1080px; margin: 0 auto;
+      padding: 0 20px;
+      display: flex; align-items: stretch; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      padding: 12px 0;
+    }
+    .brand-mark {
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-divider {
+      width: 1px; background: #333; margin: 0 14px; align-self: stretch;
+    }
+    .brand-sub {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400; letter-spacing: .04em;
+      color: #888; font-size: 12px;
+    }
+    .nav { display: flex; align-items: stretch; }
+    .nav a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: #888; text-decoration: none;
+      padding: 0 14px;
+      display: flex; align-items: center;
+      border-left: 1px solid #222;
+      transition: color 100ms, background 100ms;
+    }
+    .nav a:hover { color: var(--white); background: #111; }
+
+    /* ─── Wrap ─── */
+    .wrap {
+      max-width: 1080px; margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    /* ─── Card ─── */
+    .card {
+      background: var(--white);
+      border: 2px solid var(--black);
+      box-shadow: 5px 5px 0 var(--black);
+    }
+
+    /* ─── Header ─── */
+    .header {
+      display: flex; gap: 0;
+      align-items: stretch;
+      border-bottom: 2px solid var(--black);
+    }
+    .thumb {
+      width: 200px; flex: 0 0 200px;
+      border-right: 2px solid var(--black);
+      overflow: hidden;
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%) contrast(1.05); }
+    .titleblock { flex: 1 1 auto; padding: 18px 20px; }
+
+    .kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .kicker::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 2px;
+      background: var(--black);
+      flex: 0 0 18px;
+    }
+
+    h1 {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 24px; font-weight: 700;
+      line-height: 1.15; letter-spacing: -.01em;
+      margin: 0 0 12px;
+    }
+    h1 em {
+      font-style: normal; font-weight: 300; font-size: .7em;
+      color: var(--dim); display: block;
+      margin-top: 4px; letter-spacing: .01em;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 11px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px;
+      border: 1px solid var(--black);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--black); background: var(--white);
+    }
+    .chip.filled { background: var(--black); color: var(--white); }
+    .chip svg { width: 10px; height: 10px; flex: 0 0 10px; }
+
+    .subtitle {
+      font-size: 13px; font-weight: 400;
+      color: var(--dim); line-height: 1.5;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+
+    /* ─── Tabs ─── */
+    .tabs-section { border-bottom: 2px solid var(--black); }
+
+    .tablist {
+      display: flex; overflow-x: auto;
+      border-bottom: none;
+    }
+    .tablist::-webkit-scrollbar { display: none; }
+
+    .tabbtn {
+      appearance: none; border: none;
+      border-right: 1px solid var(--line-dk);
+      background: var(--off);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--dim); cursor: pointer;
+      padding: 13px 18px;
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap; flex: 0 0 auto;
+      border-bottom: 3px solid transparent;
+      transition: background 100ms, color 100ms, border-color 100ms;
+    }
+    .tabbtn:last-child { border-right: none; }
+    .tabbtn:hover { background: var(--white); color: var(--black); }
+    .tabbtn[aria-selected="true"] {
+      background: var(--white); color: var(--black);
+      border-bottom-color: var(--black); font-weight: 700;
+    }
+    .tab-icon { display: flex; align-items: center; width: 14px; height: 14px; flex: 0 0 14px; }
+    .tab-icon svg { width: 13px; height: 13px; }
+
+    .tabpanels { }
+    .tabpanel { display: none; }
+    .tabpanel.active { display: block; animation: panelIn 150ms ease; }
+    @keyframes panelIn { from { opacity:0; transform:translateY(2px); } to { opacity:1; transform:none; } }
+
+    .tab-inner { padding: 20px; }
+
+    .tab-summary {
+      font-size: 13px; color: var(--dim);
+      margin: 0 0 16px; line-height: 1.5; max-width: 680px;
+    }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .action-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px;
+      border: 2px solid var(--black);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--black); background: var(--white);
+      text-decoration: none;
+      transition: background 100ms, color 100ms;
+    }
+    .action-link svg { width: 12px; height: 12px; flex: 0 0 12px; }
+    .action-link:hover { background: var(--black); color: var(--white); }
+    .action-link.primary { background: var(--black); color: var(--white); }
+    .action-link.primary:hover { background: #333; }
+
+    .tab-note {
+      font-size: 12px; color: var(--dim);
+      margin-top: 14px; line-height: 1.5;
+      padding: 10px 14px;
+      background: var(--off);
+      border-left: 3px solid var(--black);
+    }
+    .tab-note strong { color: var(--black); }
+
+    /* Build steps */
+    .build-steps { border: 2px solid var(--black); }
+    .build-step {
+      display: flex; align-items: stretch;
+      border-bottom: 1px solid var(--line);
+    }
+    .build-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 46px; flex: 0 0 46px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700;
+      background: var(--black); color: var(--white);
+      border-right: 1px solid var(--line);
+    }
+    .step-body { flex: 1; padding: 12px 14px; }
+    .step-title {
+      font-weight: 700; font-size: 13px; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .step-tag {
+      font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 2px 6px; border: 1px solid var(--line-dk); color: var(--dim);
+    }
+    .step-desc { font-size: 12px; color: var(--dim); line-height: 1.45; }
+
+    /* BOM table */
+    .bom-table {
+      width: 100%; border-collapse: collapse;
+      border: 2px solid var(--black); font-size: 12.5px;
+    }
+    .bom-table thead { background: var(--black); }
+    .bom-table th {
+      padding: 9px 11px; text-align: left;
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--white); border-right: 1px solid #333;
+    }
+    .bom-table th:last-child { border-right: none; }
+    .bom-table td {
+      padding: 9px 11px; border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line); vertical-align: top;
+    }
+    .bom-table td:last-child { border-right: none; }
+    .bom-table tr:last-child td { border-bottom: none; }
+    .bom-table tr:nth-child(even) td { background: var(--off); }
+    .bom-table tr:hover td { background: #ebebea; }
+    .qty { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--dim); }
+    .sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-style: italic; }
+
+    /* Field report form */
+    .field-form { display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--black);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 9px 11px; border: 1px solid var(--line-dk);
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
+      color: var(--black); background: var(--white);
+      outline: none; border-radius: 0; transition: border-color 100ms;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--black); box-shadow: 0 0 0 2px rgba(10,10,10,.07); }
+    .form-group textarea { resize: vertical; min-height: 76px; }
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border: 2px solid var(--black); background: var(--black); color: var(--white);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      cursor: pointer; align-self: flex-start; transition: background 100ms;
+    }
+    .form-submit:hover { background: #333; }
+    .form-submit svg { width: 12px; height: 12px; }
+    #report-confirm {
+      display: none; margin-top: 8px; padding: 10px 14px;
+      border-left: 3px solid var(--black); background: var(--off);
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600;
+    }
+
+    /* ─── Grid ─── */
+    .grid {
+      display: grid; grid-template-columns: 1.1fr .9fr;
+      border-top: 2px solid var(--black);
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .thumb { width: 100%; height: 180px; flex: none; border-right: none; border-bottom: 2px solid var(--black); }
+      .header { flex-wrap: wrap; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .info-panel {
+      padding: 20px;
+      border-right: 2px solid var(--black);
+    }
+    .panel-heading {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--black);
+      margin: 0 0 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .panel-heading::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    .info-summary { font-size: 13px; line-height: 1.5; color: var(--black); }
+    .info-summary .muted { color: var(--dim); }
+
+    /* ─── details / summary ─── */
+    details {
+      border: 1px solid var(--line);
+      background: var(--white); overflow: hidden;
+    }
+    details + details { margin-top: 8px; }
+
+    summary {
+      list-style: none; cursor: pointer;
+      padding: 11px 13px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      user-select: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--black); background: var(--off);
+      transition: background 100ms;
+    }
+    summary:hover { background: #eaeae6; }
+    summary::-webkit-details-marker { display: none; }
+    details[open] > summary { border-bottom: 1px solid var(--line); }
+
+    .sum-left { display: flex; align-items: center; gap: 8px; }
+    .sum-left svg { width: 12px; height: 12px; flex: 0 0 12px; }
+    .sum-hint {
+      font-weight: 400; font-style: italic; color: var(--faint);
+      text-transform: none; letter-spacing: 0;
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 11px;
+    }
+    .chev {
+      width: 7px; height: 7px; flex: 0 0 7px;
+      border-right: 2px solid var(--dim); border-bottom: 2px solid var(--dim);
+      transform: rotate(-45deg); transition: transform 150ms;
+    }
+    details[open] > summary .chev { transform: rotate(45deg); }
+
+    .details-body {
+      padding: 14px; background: var(--white);
+      font-size: 13px; color: var(--black);
+    }
+    .details-body p { margin: 0 0 10px; }
+    .details-body p:last-child { margin: 0; }
+    .details-body a { color: var(--black); text-decoration: underline; }
+    .details-body a:hover { color: var(--dim); }
+
+    /* ─── ETA panel ─── */
+    .eta-wrap { padding: 20px; }
+
+    .eta-details {
+      border: 2px solid var(--black);
+      background: var(--white); overflow: hidden;
+    }
+    .eta-details > summary {
+      padding: 13px 15px;
+      background: var(--black); color: var(--white);
+      font-size: 10px; letter-spacing: .1em;
+    }
+    .eta-details > summary:hover { background: #1a1a1a; }
+    .eta-details > summary .chev { border-color: #666; }
+    .eta-details > summary .sum-hint { color: #777; font-size: 11px; }
+    .eta-details > summary svg { stroke: white; }
+
+    .eta-body { padding: 16px; }
+
+    .scoreTop {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--line);
+    }
+    .bigScore {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 54px; font-weight: 700; line-height: 1;
+      color: var(--black); letter-spacing: -.04em;
+    }
+    .score-meta { margin-top: 4px; }
+    .score-meta div {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px; color: var(--faint); letter-spacing: .04em; line-height: 1.6;
+    }
+
+    .badgeRow { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; align-items: flex-start; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 8px;
+      border: 1px solid var(--black);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge.filled { background: var(--black); color: var(--white); }
+    .badge.warn { border-style: dashed; color: var(--dim); background: var(--white); }
+    .badge svg { width: 9px; height: 9px; }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--faint); margin-bottom: 8px;
+    }
+
+    .gates { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+    .gate {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 9px 10px; border: 1px solid var(--line);
+      background: var(--off); font-size: 11.5px;
+    }
+    .gate-mark {
+      width: 18px; height: 18px; flex: 0 0 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 11px;
+      background: var(--black); color: var(--white);
+    }
+    .gate-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .gate-desc { color: var(--dim); display: block; margin-top: 2px; font-size: 11px; line-height: 1.3; }
+
+    .bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .barRow { display: grid; grid-template-columns: 110px 1fr 32px; gap: 8px; align-items: center; }
+    .barRow .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--black); }
+    .meter { height: 7px; background: var(--line); overflow: hidden; }
+    .fill { height: 100%; background: var(--black); }
+    .val { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--faint); text-align: right; }
+
+    .flags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .flag {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 10px; border: 1px dashed var(--line-dk);
+      background: var(--off); color: var(--dim); font-size: 11px;
+    }
+    .flag svg { width: 11px; height: 11px; }
+
+    .eta-links {
+      margin-top: 12px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px;
+      color: var(--faint); letter-spacing: .04em;
+    }
+    .eta-links strong { color: var(--dim); }
+    .eta-links a { color: var(--black); text-decoration: underline; }
+
+    /* Related rail */
+    .rail { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 6px; scroll-snap-type: x mandatory; }
+    .rail::-webkit-scrollbar { height: 4px; }
+    .rail::-webkit-scrollbar-thumb { background: var(--line-dk); }
+    .railCard {
+      flex: 0 0 148px; scroll-snap-align: start;
+      border: 1px solid var(--line);
+      background: var(--white); text-decoration: none; color: var(--black);
+      transition: border-color 100ms;
+    }
+    .railCard:hover { border-color: var(--black); }
+    .railImg { width: 100%; height: 80px; object-fit: cover; display: block; background: var(--off); filter: grayscale(30%); }
+    .railBody { padding: 8px; border-top: 1px solid var(--line); }
+    .railTitle { font-weight: 700; font-size: 11px; line-height: 1.25; margin-bottom: 3px; }
+    .railMeta { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--faint); }
+
+    /* Footer */
+    .foot {
+      padding: 11px 20px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--faint);
+      border-top: 1px solid var(--line); background: var(--off);
+    }
+    code { background: var(--black); color: var(--white); padding: 1px 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
+
+    @media (max-width: 560px) {
+      .gates { grid-template-columns: 1fr; }
+      .barRow { grid-template-columns: 90px 1fr 28px; }
+      h1 { font-size: 19px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── TOPBAR ─── -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://farmhack.org" target="_blank" rel="noopener">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD/4QBCRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAkAAAAMAAAABAFIAAEABAAEAAAABAAAAAAAAAAAAAP/bAEMACwkJBwkJBwkJCQkLCQkJCQkJCwkLCwwLCwsMDRAMEQ4NDgwSGRIlGh0lHRkfHCkpFiU3NTYaKjI+LSkwGTshE//bAEMBBwgICwkLFQsLFSwdGR0sLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLP/AABEIATwB2gMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APXKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACsrXtd0/w9Ym+vRKyGRYY44QDJJI2SAMkDsc81q1wPxS/wCQFYf9hKL/ANFvQBF/wtbQ/wDoG6j+cP8A8VR/wtbQ/wDoG6j+cP8A8VWD4J8HaH4h0y6vL9rsSxXsluv2eUIuxURhkFTzya6j/hWHhH/npqX/AIEr/wDEUD0Kv/C1tD/6Buo/nD/8VW/4c8YaT4lkuoLaK4guLdFlaO4C/NGTt3KUJHXrWV/wrDwj/wA9NS/8CV/+Irc0HwroXh1rmTT0mM1wqpJLcSGR9inIVeAAPwoA3aKKzdd1OPR9I1LUXxm3gYxA/wAUzfKi/mRQIwpvHuiweIBoTQzECdbSS8DJ5KXDcbCv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aMA1zttpOoT6L9tskaHWtL1bWLqw81WXzke4k327g87JB/Q13VFAHP8AgxZl8NaMJonilKXDPHIrKyFp5GwQ3NdBRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/Z" alt="Farm Hack" style="height:56px;width:auto;display:block;filter:invert(1);object-fit:cover;">
+        <div class="brand-divider"></div>
+        <span class="brand-sub">Tool Registry</span>
+      </a>
+      <nav class="nav">
+        <a href="https://farmhack.org/tools" target="_blank" rel="noopener">Tools</a>
+        <a href="https://farmhack.org/conversations" target="_blank" rel="noopener">Conversations</a>
+        <a href="https://farmhack.org/wiki/farm-hack-culture" target="_blank" rel="noopener">Culture</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <!-- ─── HEADER ─── -->
+      <div class="header">
+        <div class="thumb">
+          <img src="https://farmhack.org/sites/default/files/IMG_20170704_132049179.jpg" alt="Hoop Chicken Trailer in field">
+        </div>
+        <div class="titleblock">
+          <div class="kicker">Tool · Hardware · Pastured Poultry · Region: Northeast</div>
+          <h1>Hoop Chicken Trailer
+            <em>Pastured Poultry Egg Mobile</em>
+          </h1>
+          <div class="chips">
+            <span class="chip filled">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H2v8h8V2z"/><path d="M4 6l1.5 1.5L8 4.5"/></svg>
+              Open Hardware
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a4 4 0 1 0-4 6.46"/><path d="M9 7v4M11 9H7"/></svg>
+              Repairable
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l3-3 2 2 3-4"/></svg>
+              Field-tested
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v3M6 8v3M3 6H1M11 6H9M4.2 4.2L2.8 2.8M9.2 9.2L7.8 7.8M4.2 7.8L2.8 9.2M9.2 2.8L7.8 4.2"/><circle cx="6" cy="6" r="1.5"/></svg>
+              Low energy
+            </span>
+          </div>
+          <div class="subtitle">
+            A light, simply-built hoop trailer for up to ~150 birds. Moves with a small tractor or ATV and supports rotational grazing, manure distribution, and humane daily management.
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── TABS ─── -->
+      <div class="tabs-section">
+        <div class="tablist" role="tablist" aria-label="Tool sections">
+
+          <button class="tabbtn" role="tab" id="tab-view" aria-controls="panel-view" aria-selected="true" data-tab="view">
+            <span class="tab-icon">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="2"/></svg>
+            </span>
+            View on Farm Hack
+          </button>
+
+          <button class="tabbtn" role="tab" id="tab-build" aria-controls="panel-build" aria-selected="false" data-tab="build">
+            <span class="tab-icon">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/><path d="M5 5h4M5 7h4M5 9h2"/></svg>
+            </span>
+            Build Guide
+          </button>
+
+          <button class="tabbtn" role="tab" id="tab-bom" aria-controls="panel-bom" aria-selected="false" data-tab="bom">
+            <span class="tab-icon">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="10" height="10"/><path d="M5 5h4M5 7h4M5 9h2"/></svg>
+            </span>
+            BOM / Parts
+          </button>
+
+          <button class="tabbtn" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false" data-tab="report">
+            <span class="tab-icon">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v8M4 8l3 3 3-3"/><path d="M2 13h10"/></svg>
+            </span>
+            Add Field Report
+          </button>
+
+        </div>
+
+        <div class="tabpanels">
+
+          <!-- VIEW -->
+          <div id="panel-view" class="tabpanel active" role="tabpanel" aria-labelledby="tab-view">
+            <div class="tab-inner">
+              <p class="tab-summary">Open the canonical tool page on FarmHack.org for community comments, revision history, and full project context. This is the living source of record.</p>
+              <div class="btn-row">
+                <a class="action-link primary" href="https://farmhack.org/tools/hoop-chicken-trailer" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+                  Open on FarmHack.org
+                </a>
+                <a class="action-link" href="https://farmhack.org/conversations" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h10v7H2z"/><path d="M5 12l2-2h5"/></svg>
+                  Community Conversations
+                </a>
+              </div>
+              <div class="tab-note">
+                <strong>Tip:</strong> Use this tab as source-of-truth until docs are migrated to a new registry or Git repo. FarmHack stores full edit history, contributor list, and all comments.
+              </div>
+            </div>
+          </div>
+
+          <!-- BUILD GUIDE -->
+          <div id="panel-build" class="tabpanel" role="tabpanel" aria-labelledby="tab-build">
+            <div class="tab-inner">
+              <p class="tab-summary">Step-by-step build instructions, drawings, safety notes, and maintenance guidance. Portable formats (PDF, Markdown, SVG) preferred.</p>
+              <div class="build-steps">
+                <div class="build-step">
+                  <div class="step-num">01</div>
+                  <div class="step-body">
+                    <div class="step-title">Frame &amp; Chassis <span class="step-tag">~4 hrs</span></div>
+                    <div class="step-desc">Weld or bolt the steel tube frame to the trailer tongue. 2″ square tube, 14-gauge. Verify axle rating for loaded weight (~800 lbs).</div>
+                  </div>
+                </div>
+                <div class="build-step">
+                  <div class="step-num">02</div>
+                  <div class="step-body">
+                    <div class="step-title">Hoop Bending <span class="step-tag">~2 hrs</span></div>
+                    <div class="step-desc">Bend 1½″ EMT conduit over a jig at 7 ft span. Space hoops 24″ on center. Secure ends in punched angle iron sockets.</div>
+                  </div>
+                </div>
+                <div class="build-step">
+                  <div class="step-num">03</div>
+                  <div class="step-body">
+                    <div class="step-title">Skin &amp; Vents <span class="step-tag">~3 hrs</span></div>
+                    <div class="step-desc">Apply corrugated polycarbonate on sides; greenhouse poly on top 2/3. Install ridge-cap vents — critical for summer temps. UV-stable fasteners.</div>
+                  </div>
+                </div>
+                <div class="build-step">
+                  <div class="step-num">04</div>
+                  <div class="step-body">
+                    <div class="step-title">Nest Boxes &amp; Roosts <span class="step-tag">~2 hrs</span></div>
+                    <div class="step-desc">Mount 16-hole community nest box along one side; roll-out egg tray optional. 2×2 pine roosts, 18″ above floor, 10 in. per bird spacing.</div>
+                  </div>
+                </div>
+                <div class="build-step">
+                  <div class="step-num">05</div>
+                  <div class="step-body">
+                    <div class="step-title">Flooring &amp; Predator Wire <span class="step-tag">~1.5 hrs</span></div>
+                    <div class="step-desc">No solid floor — 1×1 welded wire apron staked at perimeter. Consider electric poultry net for perimeter fencing at each rotation.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-row" style="margin-top:14px;">
+                <a class="action-link primary" href="https://farmhack.org/tools/hoop-chicken-trailer" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+                  Full Build Docs
+                </a>
+                <a class="action-link" href="#" onclick="return false;">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 7l3 4 3-4"/><path d="M2 12h10"/></svg>
+                  Download PDF
+                </a>
+              </div>
+              <div class="tab-note"><strong>Sections:</strong> Overview · Materials · Tools needed · Steps · Safety · Maintenance · Common failures · Improvements</div>
+            </div>
+          </div>
+
+          <!-- BOM -->
+          <div id="panel-bom" class="tabpanel" role="tabpanel" aria-labelledby="tab-bom">
+            <div class="tab-inner">
+              <p class="tab-summary">Bill of materials with regional substitutions and sourcing notes. Dimensions, fasteners, and optional upgrades included.</p>
+              <table class="bom-table">
+                <thead>
+                  <tr><th>Item</th><th>Qty</th><th>Spec / Notes</th><th>Source</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Steel tube frame</strong><div class="sub">Sub: angle iron ladder frame</div></td><td class="qty">1 set</td><td>2″ sq. tube, 14ga, ~24 ft total</td><td>Local steel supplier</td></tr>
+                  <tr><td><strong>Trailer axle + wheels</strong><div class="sub">Sub: used boat trailer axle</div></td><td class="qty">1</td><td>3,500 lb rated, 5-bolt, 72″ track</td><td>Harbor Freight / used</td></tr>
+                  <tr><td><strong>1½″ EMT conduit (hoops)</strong></td><td class="qty">12 pcs</td><td>10 ft lengths, bent to 7 ft span</td><td>Home Depot / Lowe's</td></tr>
+                  <tr><td><strong>Greenhouse poly film</strong><div class="sub">Sub: corrugated polycarbonate</div></td><td class="qty">150 sf</td><td>6 mil, 4-year UV, greenhouse grade</td><td>FarmTek / ag supply</td></tr>
+                  <tr><td><strong>1×1 welded wire (floor)</strong></td><td class="qty">1 roll</td><td>50 ft × 4 ft, 14ga galvanized</td><td>Tractor Supply Co.</td></tr>
+                  <tr><td><strong>Community nest box</strong><div class="sub">Sub: build from plywood</div></td><td class="qty">1</td><td>16-hole, roll-out optional</td><td>Stromberg's / DIY</td></tr>
+                  <tr><td><strong>2×2 pine (roosts)</strong></td><td class="qty">4 pcs</td><td>8 ft, smooth-sanded</td><td>Lumber yard</td></tr>
+                  <tr><td><strong>Ridge-cap vent</strong></td><td class="qty">2</td><td>12″ wide, adjustable damper</td><td>FarmTek / greenhouse</td></tr>
+                  <tr><td><strong>Hitch ball mount</strong></td><td class="qty">1</td><td>2″ ball, class III</td><td>AutoZone / hardware</td></tr>
+                </tbody>
+              </table>
+              <div class="btn-row" style="margin-top:14px;">
+                <a class="action-link primary" href="https://farmhack.org/tools/hoop-chicken-trailer" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+                  Full BOM on FarmHack
+                </a>
+                <a class="action-link" href="#" onclick="return false;">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 7l3 4 3-4"/><path d="M2 12h10"/></svg>
+                  Download CSV
+                </a>
+              </div>
+              <div class="tab-note"><strong>Regional note:</strong> Cattle panels (16 ft, 4 ga) are a common rural substitute for bent EMT hoops. Minimum viable build can use all repurposed materials.</div>
+            </div>
+          </div>
+
+          <!-- FIELD REPORT -->
+          <div id="panel-report" class="tabpanel" role="tabpanel" aria-labelledby="tab-report">
+            <div class="tab-inner">
+              <p class="tab-summary">Share what worked, what failed, your farm context (scale, climate, flock size), and any modifications. Field reports improve this tool for everyone.</p>
+              <div class="field-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="fr-name">Name / handle</label>
+                    <input type="text" id="fr-name" placeholder="e.g. Jane — Green Hollow Farm">
+                  </div>
+                  <div class="form-group">
+                    <label for="fr-date">Date of use</label>
+                    <input type="date" id="fr-date">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="fr-region">Region / climate</label>
+                    <input type="text" id="fr-region" placeholder="e.g. Vermont, Zone 5b">
+                  </div>
+                  <div class="form-group">
+                    <label for="fr-scale">Flock size</label>
+                    <select id="fr-scale">
+                      <option value="">— select —</option>
+                      <option>1–25 birds</option>
+                      <option>26–75 birds</option>
+                      <option>76–150 birds</option>
+                      <option>150+ birds</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="fr-worked">What worked well</label>
+                  <textarea id="fr-worked" placeholder="e.g. Easy to move with ATV, birds settled quickly…"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="fr-failed">What failed or needed improvement</label>
+                  <textarea id="fr-failed" placeholder="e.g. Ventilation inadequate in July, added second ridge vent…"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="fr-mods">Modifications you made</label>
+                  <textarea id="fr-mods" rows="2" placeholder="e.g. Added solar nipple waterers, switched to cattle panel hoops…"></textarea>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+                  <button class="form-submit" onclick="submitReport(event)">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+                    Submit Field Report
+                  </button>
+                  <span style="font-size:11px;color:var(--faint);font-family:'IBM Plex Mono',monospace;">
+                    Or post on <a href="https://farmhack.org/conversations" target="_blank" rel="noopener" style="color:var(--black);">FarmHack Conversations</a>
+                  </span>
+                </div>
+                <div id="report-confirm">
+                  ✓ Field report recorded. (Demo only — wire to your backend or a form service.)
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tabs-section -->
+
+      <!-- ─── GRID ─── -->
+      <div class="grid">
+
+        <!-- LEFT -->
+        <div class="info-panel">
+          <div class="panel-heading">What it does</div>
+          <div class="info-summary">
+            Mobile housing supporting rotational grazing, manure distribution, and humane daily management.
+            <span class="muted"> Optimized for practical farm-shop builds and incremental improvements by local makers.</span>
+          </div>
+
+          <div style="margin-top:14px;">
+            <details open>
+              <summary>
+                <div class="sum-left">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v3l-3 3h6L6 5V2z"/><path d="M3 8v2h6V8"/></svg>
+                  Project Links &amp; Context
+                </div>
+                <span class="chev"></span>
+              </summary>
+              <div class="details-body">
+                <p><strong>Community / conversations</strong><br>
+                  <a href="https://farmhack.org/conversations" target="_blank" rel="noopener">Farm Hack Conversations</a> ·
+                  <a href="https://farmhack.org/tools/hoop-chicken-trailer" target="_blank" rel="noopener">Tool page comments</a>
+                </p>
+                <p><strong>Documentation tools</strong><br>
+                  <a href="https://farmhack.org/tools/tool-template-wiki" target="_blank" rel="noopener">Tool Template Wiki</a> ·
+                  <a href="https://farmhack.org/content/get-started" target="_blank" rel="noopener">Get Started guide</a>
+                </p>
+                <p><strong>Problem statement</strong><br>Link or paste the core "I am a farmer and I want…" statement here.</p>
+                <p><strong>Alternative approaches</strong><br>Fixed coops + paddock fencing · skid shelters · ventilation variants · different wheelbase designs.</p>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <div class="sum-left">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.5"/><path d="M2 6h8M6 2a7 7 0 0 1 0 8M6 2a7 7 0 0 0 0 8"/></svg>
+                  Related Tools
+                </div>
+                <span class="chev"></span>
+              </summary>
+              <div class="details-body">
+                <div id="related-rail" class="rail" aria-label="Related tools"></div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- RIGHT: ETA — collapsible, default CLOSED -->
+        <div class="eta-wrap">
+          <details class="eta-details" open aria-label="Ethical Technology Assessment">
+            <summary>
+              <div class="sum-left">
+                <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9l-3 1.5.5-3.5L1 4.5 4.5 4z"/></svg>
+                Ethical Technology Assessment
+                <span class="sum-hint">Score 82 · tap to expand</span>
+              </div>
+              <span class="chev"></span>
+            </summary>
+
+            <div class="eta-body">
+              <div class="scoreTop">
+                <div>
+                  <div class="bigScore">82</div>
+                  <div class="score-meta">
+                    <div>Overall Ethical Tech Score (0–100)</div>
+                    <div>Confidence: 2/3 · Reviewed: 2026-02-19</div>
+                  </div>
+                </div>
+                <div class="badgeRow">
+                  <span class="badge filled">
+                    <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+                    Commons-ready
+                  </span>
+                  <span class="badge filled">
+                    <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+                    Repairable
+                  </span>
+                  <span class="badge filled">
+                    <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+                    Low energy
+                  </span>
+                  <span class="badge warn">
+                    <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v3M5 8v.5"/></svg>
+                    Supply watch
+                  </span>
+                </div>
+              </div>
+
+              <div class="section-label">Entry gates</div>
+              <div class="gates">
+                <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G1 Transparency</div><span class="gate-desc">Clear purpose, limits, reproducible docs</span></div></div>
+                <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G2 Rights &amp; Control</div><span class="gate-desc">Clear licensing + attribution + exportability</span></div></div>
+                <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G3 No Abuse</div><span class="gate-desc">No surveillance / coercive lock-in patterns</span></div></div>
+                <div class="gate pass"><div class="gate-mark">✓</div><div><div class="gate-name">G4 Safety &amp; Stewardship</div><span class="gate-desc">Safety notes + maintenance + repair guidance</span></div></div>
+              </div>
+
+              <div class="section-label" style="margin-top:12px;">Category scores (0–5)</div>
+              <div class="bars">
+                <div class="barRow"><div class="lbl">Resource ethics</div><div class="meter"><div class="fill" style="width:80%"></div></div><div class="val">4.0</div></div>
+                <div class="barRow"><div class="lbl">Social ethics</div><div class="meter"><div class="fill" style="width:70%"></div></div><div class="val">3.5</div></div>
+                <div class="barRow"><div class="lbl">Commons fit</div><div class="meter"><div class="fill" style="width:90%"></div></div><div class="val">4.5</div></div>
+                <div class="barRow"><div class="lbl">Resilience</div><div class="meter"><div class="fill" style="width:84%"></div></div><div class="val">4.2</div></div>
+              </div>
+
+              <div class="section-label" style="margin-top:12px;">Flags</div>
+              <div class="flags">
+                <span class="flag">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v5M6 9v1"/><path d="M3 4.5L6 2l3 2.5"/></svg>
+                  Parts availability varies by region
+                </span>
+              </div>
+
+              <div class="eta-links" style="margin-top:12px;">
+                <strong>ETA DETAILS —</strong>
+                <a href="https://farmhack.org/tools/hoop-chicken-trailer" target="_blank" rel="noopener">view notes</a> ·
+                <a href="https://farmhack.org/tools" target="_blank" rel="noopener">browse tools</a> ·
+                <a href="https://farmhack.org/conversations" target="_blank" rel="noopener">join peer review</a>
+              </div>
+            </div>
+          </details>
+        </div>
+
+      </div><!-- /grid -->
+
+      <div class="foot">
+        Save as <code>index.html</code> for GitHub Pages · Default tab: View on Farm Hack · ETA: collapsible, default closed
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /wrap -->
+
+  <script>
+    // ── Tabs ──
+    const tabs   = Array.from(document.querySelectorAll('.tabbtn'));
+    const panels = Array.from(document.querySelectorAll('.tabpanel'));
+
+    function activateTab(name, focus = false) {
+      tabs.forEach(btn => {
+        const on = btn.dataset.tab === name;
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        if (on && focus) btn.focus();
+      });
+      panels.forEach(p => p.classList.toggle('active', p.id === `panel-${name}`));
+    }
+
+    tabs.forEach((btn, i) => {
+      btn.addEventListener('click', () => activateTab(btn.dataset.tab, true));
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(tabs[(i+1)%tabs.length].dataset.tab, true); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); activateTab(tabs[(i-1+tabs.length)%tabs.length].dataset.tab, true); }
+        if (e.key === 'Home') { e.preventDefault(); activateTab(tabs[0].dataset.tab, true); }
+        if (e.key === 'End')  { e.preventDefault(); activateTab(tabs[tabs.length-1].dataset.tab, true); }
+      });
+    });
+
+    activateTab('view', false);
+
+    // ── Field report demo ──
+    function submitReport(e) {
+      e.preventDefault();
+      document.getElementById('report-confirm').style.display = 'block';
+    }
+
+    // ── Related tools rail ──
+    const relatedTools = [
+      { title: 'Bicycle Powered Thresher', meta: 'Ready to Build · Post Harvest', href: 'https://farmhack.org/tools/bicycle-powered-thresher', img: 'https://farmhack.org/sites/default/files/COVER%20IMAGE-01.jpg' },
+      { title: 'TricTrac – Tricycle Tractor', meta: 'Functional Prototype · Pedal', href: 'https://farmhack.org/tools/trictrac-tricycle-tractor', img: 'https://farmhack.org/sites/default/files/DSC05462_0.JPG' },
+      { title: 'Farm Item Locator', meta: 'Concept · Smart Farm', href: 'https://farmhack.org/tools/farm-item-locator', img: 'https://farmhack.org/sites/default/files/Radar_screen_small.png' },
+      { title: 'Hoop Chicken Trailer', meta: 'Ready to Build · Poultry', href: 'https://farmhack.org/tools/hoop-chicken-trailer', img: 'https://farmhack.org/sites/default/files/IMG_20170704_132049179.jpg' },
+    ];
+
+    document.getElementById('related-rail').innerHTML = relatedTools.map(t => `
+      <a class="railCard" href="${t.href}" target="_blank" rel="noopener">
+        <img class="railImg" src="${t.img}" alt="${t.title}">
+        <div class="railBody">
+          <div class="railTitle">${t.title}</div>
+          <div class="railMeta">${t.meta}</div>
+        </div>
+      </a>
+    `).join('');
+  </script>
+</body>
+</html>
